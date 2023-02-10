@@ -1,10 +1,15 @@
+import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
 import '../styles/globals.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import Script from 'next/script';
-import Layout from '../components/Layout';
-import { useEffect } from 'react';
 import reduxStore, { persistor } from '../redux';
 import { Provider } from 'react-redux';
+
+const Layout = dynamic(() => import('../components/Layout'), {
+    ssr: false,
+});
 
 export default function MyApp({ Component, pageProps }) {
     useEffect(() => {

@@ -1,17 +1,59 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-
-import styles from './DangNhap.module.scss';
 import { Col, Row } from 'react-bootstrap';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import Router from 'next/router';
 
+import styles from './DangNhap.module.scss';
 import LogoImg from '../../assets/img/logo.png';
 import LogInImg from '../../assets/img/login.png';
+import { LoginUserAdmin } from '@/services';
+import * as actions from '../../store/actions';
 
 const cx = classNames.bind(styles);
 
 function DangNhap() {
     const [isViewPass, setIsViewPass] = useState(false);
+    const [email, setEmail] = useState('');
+    const [passWord, setPassWord] = useState('');
+
+    const dispatch = useDispatch();
+
+    const handleValidate = () => {
+        let isValid = true;
+
+        const arrayClone = [email, passWord];
+
+        for (let i = 0; i < arrayClone.length; i++) {
+            if (!arrayClone[i]) {
+                isValid = false;
+                alert('Bạn đã nhập thiếu trường !');
+                break;
+            }
+        }
+
+        return isValid;
+    };
+
+    const handleSubmit = async () => {
+        const check = handleValidate();
+
+        if (!check) return;
+
+        //ES6
+        try {
+            const Res = await LoginUserAdmin({ email, matKhau: passWord });
+
+            const { data } = Res;
+
+            dispatch(actions.userLoginSuccess(data));
+
+            Router.push('/');
+        } catch (error) {
+            alert(error.response.data.message);
+        }
+    };
 
     return (
         <div className={cx('login-wp')}>
@@ -32,13 +74,20 @@ function DangNhap() {
                                     <p>Enter your details below.</p>
                                 </div>
                                 <div className={cx('input-start')}>
-                                    <input type="email" placeholder="Email address" />
+                                    <input
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        type="email"
+                                        placeholder="Email address"
+                                    />
                                     <div
                                         style={{
                                             position: 'relative',
                                         }}
                                     >
                                         <input
+                                            value={passWord}
+                                            onChange={(e) => setPassWord(e.target.value)}
                                             type={isViewPass ? 'text' : 'password'}
                                             placeholder="Enter your password"
                                         />
@@ -48,7 +97,9 @@ function DangNhap() {
                                             <i onClick={() => setIsViewPass(true)} className="bi bi-eye-slash-fill"></i>
                                         )}
                                     </div>
-                                    <button className="btn btn-primary">Đăng Nhập</button>
+                                    <button onClick={handleSubmit} className="btn btn-primary">
+                                        Đăng Nhập
+                                    </button>
                                 </div>
                             </div>
                         </div>
