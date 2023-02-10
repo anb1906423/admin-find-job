@@ -1,0 +1,89 @@
+.login-wp {
+    padding: 30px;
+    background-color: #f5f5f5;
+    height: 100vh;
+}
+
+.content {
+    height: 100%;
+}
+
+.row-boostrap {
+    height: 100%;
+}
+
+.left {
+    background-color: #fff;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.07);
+}
+
+.logo {
+    object-fit: contain;
+    width: 100px;
+    height: 58px;
+}
+
+.body-left {
+    h3 {
+        font-weight: 700;
+    }
+
+    img {
+        width: 100%;
+        object-fit: contain;
+    }
+}
+
+.body-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.content-body-right {
+    padding: 20px;
+}
+
+.input-start {
+    width: 480px;
+
+    h4 {
+        font-weight: 700;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+
+    input {
+        width: 100%;
+        margin-bottom: 20px;
+        padding-left: 10px;
+        height: 56px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        outline: none;
+
+        &:hover {
+            border-color: #000;
+        }
+    }
+
+    div {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    i {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        cursor: pointer;
+    }
+}

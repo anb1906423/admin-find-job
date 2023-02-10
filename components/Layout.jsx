@@ -1,19 +1,28 @@
-import React from 'react'
-import Section from './Section'
+import React from 'react';
+import Section from './Section';
+import { useRouter } from 'next/router';
 
 const Layout = ({ children }) => {
-  return (
-    <div className="overflow-hidden">
-      <div className='layout row'>
-        <div className="col-3">
-          <Section />
-        </div>
-        <div className="cont col-9">
-          {children}
-        </div>
-      </div>
-    </div>
-  )
-}
+    const prams = useRouter();
 
-export default Layout
+    console.log(prams.pathname);
+
+    return (
+        <>
+            {prams.pathname === '/dang-nhap' ? (
+                children
+            ) : (
+                <div className="overflow-hidden">
+                    <div className="layout row">
+                        <div className="col-3">
+                            <Section />
+                        </div>
+                        <div className="cont col-9">{children}</div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+};
+
+export default Layout;

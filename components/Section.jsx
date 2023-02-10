@@ -15,7 +15,7 @@ const Section = () => {
         <div className='section w-100'>
             <div className="logo-box w-100 text-center">
                 <a href="/">
-                    <img className='logo' src="http://localhost:3000/img/logo.png" alt="" />
+                    <img className='logo' src="https://trang-dashboard-design-patiern-truongson09112003.vercel.app/static/mock-images/avatars/avatar_default.jpg" alt="" />
                 </a>
             </div>
             <ul className="menu">

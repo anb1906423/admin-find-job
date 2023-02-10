@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 const Heading = (props) => {
     return (
-        <div className='heading text-center'>
+        <div className="heading text-center">
             <h6
-                className='text-uppercase fw-bolder'
+                className="text-uppercase fw-bolder"
                 style={{
                     padding: '10px',
                 }}
@@ -12,7 +12,7 @@ const Heading = (props) => {
                 {props.title}
             </h6>
         </div>
-    )
-}
+    );
+};
 
-export default Heading
+export default Heading;

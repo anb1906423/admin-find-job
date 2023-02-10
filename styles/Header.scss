@@ -1,6 +1,7 @@
 .header {
     height: var(--height-header);
     position: relative;
+
     .title-header {
         font-weight: bold;
         font-size: 22px;
@@ -11,7 +12,7 @@
     content: '';
     position: absolute;
     width: 100%;
-    background-color: #CCCCCC;
+    background-color: #cccccc;
     height: 1px;
     left: 50%;
     bottom: 0;
