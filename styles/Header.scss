@@ -1,0 +1,19 @@
+.header {
+    height: var(--height-header);
+    position: relative;
+    .title-header {
+        font-weight: bold;
+        font-size: 22px;
+    }
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    background-color: #CCCCCC;
+    height: 1px;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
