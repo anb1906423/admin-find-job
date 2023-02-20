@@ -77,7 +77,7 @@ function TaiKhoanUngVien() {
                                     placement="bottom-start"
                                     render={() => PreviewAccount(item)}
                                 >
-                                    <tr key={id}>
+                                    <tr key={id} className={cx('item-account')}>
                                         <td>{index + 1}</td>
                                         <td>{item.hoVaTen ? item.hoVaTen : 'Đang Cập Nhật'}</td>
                                         <td>{item.email ? item.email : 'Đang Cập Nhật'}</td>
@@ -86,7 +86,7 @@ function TaiKhoanUngVien() {
                                         <td>{item.viTriMongMuon ? item.viTriMongMuon : 'Đang Cập Nhật'}</td>
                                         <td className="text-center">
                                             <button className="btn" title="Xóa tài khoản ứng viên">
-                                                <i class="bi bi-trash2"></i>
+                                                <i className="bi bi-trash2"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -105,56 +105,3 @@ function TaiKhoanUngVien() {
 TaiKhoanUngVien.propTypes = {};
 
 export default TaiKhoanUngVien;
-
-{
-    /* <div>
-                <div className={cx('header')}>
-                    <div className={cx('item-header')}>#</div>
-                    <div className={cx('item-header')}>Họ và tên</div>
-                    <div className={cx('item-header')}>Email</div>
-                    <div className={cx('item-header')}>SDT</div>
-                    <div className={cx('item-header')}>Địa chỉ</div>
-                    <div className={cx('item-header')}>Vị trí mong muốn</div>
-                    <div className={cx('item-header')}> Hành động</div>
-                </div>
-                <div className={cx('body')}>
-                    {!_.isEmpty(data) &&
-                        data.map((item, index) => {
-                            const id = uuidv4();
-
-                            return (
-                                <div key={id} className={cx('body-content')}>
-                                    <Tippy
-                                        delay={[50, 10000000]}
-                                        placement="bottom-start"
-                                        interactive
-                                        render={() => PreviewAccount(item)}
-                                    >
-                                        <div className={cx('item-body')}>{index + 1}</div>
-                                    </Tippy>
-                                    <div className={cx('item-body')}>
-                                        <span>{item.hoVaTen ? item.hoVaTen : 'Đang Cập Nhật'}</span>
-                                    </div>
-                                    <div className={cx('item-body')}>
-                                        <span>{item.email ? item.email : 'Đang Cập Nhật'}</span>
-                                    </div>
-                                    <div className={cx('item-body')}>
-                                        <span>{item.soDienThoai ? item.soDienThoai : 'Đang Cập Nhật'}</span>
-                                    </div>
-                                    <div className={cx('item-body')}>
-                                        <span>{item.diaChi ? item.diaChi : 'Đang Cập Nhật'}</span>
-                                    </div>
-                                    <div className={cx('item-body')}>
-                                        <span>{item.viTriMongMuon ? item.viTriMongMuon : 'Đang Cập Nhật'}</span>
-                                    </div>
-                                    <div className={cx('item-body')}>
-                                        <button className="btn" title="Xóa tài khoản ứng viên">
-                                            <i class="bi bi-trash2"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                </div>
-            </div> */
-}

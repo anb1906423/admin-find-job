@@ -1,21 +1,22 @@
+import { IconDashBoard } from '@/app/icons';
+
 export const menu = [
     {
         title: 'Dashboard',
         href: '/',
-        list: [
-
-        ],
+        list: [],
+        icon: <IconDashBoard />,
     },
     {
         title: 'Tất cả công việc',
         href: '/tat-ca-cong-viec',
-        list: [
-
-        ],
+        list: [],
+        icon: <IconDashBoard />,
     },
     {
         title: 'Quản lý tài khoản',
         href: '#',
+        icon: <IconDashBoard />,
         list: [
             {
                 title: 'Nhà tuyển dụng',
@@ -30,47 +31,48 @@ export const menu = [
     {
         title: 'Quản lý danh mục',
         href: '#',
+        icon: <IconDashBoard />,
         list: [
             {
                 title: 'Bằng cấp',
-                href: '/quan-ly-danh-muc/bang-cap'
+                href: '/quan-ly-danh-muc/bang-cap',
             },
             {
                 title: 'Cấp bậc',
-                href: '/quan-ly-danh-muc/cap-bac'
+                href: '/quan-ly-danh-muc/cap-bac',
             },
             {
                 title: 'Địa điểm làm việc',
-                href: '/quan-ly-danh-muc/dia-diem-lam-viec'
+                href: '/quan-ly-danh-muc/dia-diem-lam-viec',
             },
             {
                 title: 'Kinh nghiệm',
-                href: '/quan-ly-danh-muc/kinh-nghiem'
+                href: '/quan-ly-danh-muc/kinh-nghiem',
             },
             {
                 title: 'Lĩnh vực kinh doanh',
-                href: '/quan-ly-danh-muc/linh-vuc-kinh-doanh'
+                href: '/quan-ly-danh-muc/linh-vuc-kinh-doanh',
             },
             {
                 title: 'Loại hình doanh nghiệp',
-                href: '/quan-ly-danh-muc/loai-hinh-doanh-nghiep'
+                href: '/quan-ly-danh-muc/loai-hinh-doanh-nghiep',
             },
             {
                 title: 'Loại hợp đồng',
-                href: '/quan-ly-danh-muc/loai-hop-dong'
+                href: '/quan-ly-danh-muc/loai-hop-dong',
             },
             {
                 title: 'Mức lương',
-                href: '/quan-ly-danh-muc/muc-luong'
+                href: '/quan-ly-danh-muc/muc-luong',
             },
             {
                 title: 'Ngành nghề',
-                href: '/quan-ly-danh-muc/nganh-nghe'
+                href: '/quan-ly-danh-muc/nganh-nghe',
             },
             {
                 title: 'Quy mô doanh nghiệp',
-                href: '/quan-ly-danh-muc/quy-mo'
+                href: '/quan-ly-danh-muc/quy-mo',
             },
         ],
     },
-]
+];
