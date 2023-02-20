@@ -4,6 +4,7 @@
 
 @import './Section.scss';
 @import './Header.scss';
+@import './RowItem.scss';
 
 * {
     margin: 0;
@@ -23,4 +24,19 @@ html {
     --white: white;
     --black: #000;
     --height-input-on-search: 40px;
+}
+
+.submit-btn {
+    padding: 4px 22px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin: 6px;
+    background-color: #000;
+    color: #fff;
+    transition: all .2s ease-in-out;
+}
+
+.submit-btn:hover {
+    background-color: #fff;
+    color: #000;
 }
