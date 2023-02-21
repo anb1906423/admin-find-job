@@ -10,6 +10,7 @@ export const userLoginSuccess = (userInfo) => {
 };
 
 export const userLogOut = () => {
+    console.log('check lot 1');
     return {
         type: actionTypes.USER_LOGOUT_SUCCESS,
     };

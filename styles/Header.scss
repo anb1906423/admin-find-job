@@ -1,20 +1,21 @@
 .header {
-    height: var(--height-header);
-    position: relative;
+    height       : var(--height-header);
+    border-bottom: 1px solid #ccc;
 
     .title-header {
         font-weight: bold;
-        font-size: 22px;
+        font-size  : 22px;
     }
+
 }
 
-.header::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    background-color: #cccccc;
-    height: 1px;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-}
+// .header::after {
+//     content         : '';
+//     position        : absolute;
+//     width           : 100%;
+//     background-color: #cccccc;
+//     height          : 1px;
+//     left            : 50%;
+//     bottom          : 0;
+//     transform       : translateX(-50%);
+// }
