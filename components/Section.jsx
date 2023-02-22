@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
+
 import { menu } from '../data/data';
 import Logo from '../assets/img/logo.png';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const Section = () => {
     const [showMenuItem, setShowMenuItem] = useState({});
