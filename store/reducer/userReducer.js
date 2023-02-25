@@ -21,6 +21,8 @@ const userReducer = (state = initialState, action) => {
             };
 
         case actionTypes.USER_LOGOUT_SUCCESS:
+            console.log('check lot 2');
+
             return {
                 ...state,
                 isLoggedIn: false,

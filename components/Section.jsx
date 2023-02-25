@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
-
 import { menu } from '../data/data';
 import Logo from '../assets/img/logo.png';
 import Image from 'next/image';
+import Link from 'next/link';
+import ActiveLink from '@/app/@func/ActiveLink/ActiveLink';
 
 const Section = () => {
     const [showMenuItem, setShowMenuItem] = useState({});
@@ -20,11 +20,6 @@ const Section = () => {
             <div className="logo-box  w-100 text-center">
                 <Link href="/">
                     <Image className="logo" src={Logo} alt="Hình ảnh logo" />
-                    {/* <img
-                        className="logo"
-                        src="https://trang-dashboard-design-patiern-truongson09112003.vercel.app/static/mock-images/avatars/avatar_default.jpg"
-                        alt=""
-                    /> */}
                 </Link>
             </div>
             <div className="item-user-admin">
@@ -45,23 +40,30 @@ const Section = () => {
                         menu.map((item, index) => {
                             return (
                                 <li className="menu-item text-uppercase fw-bolder" key={index}>
-                                    <a
+                                    <ActiveLink
                                         onClick={() => handleClick(index)}
-                                        className="w-100 element-a-left"
+                                        className="element-a-left"
+                                        activeClassName="active"
                                         href={item.href}
                                     >
-                                        {item.icon}
-                                        {item.title}
-                                    </a>
+                                        <>
+                                            <span>{item.icon}</span>
+                                            <span>{item.title}</span>
+                                        </>
+                                    </ActiveLink>
                                     {showMenuItem[index] && (
                                         <ul className="sub-menu w-100">
                                             {item.list &&
                                                 item.list.map((listItem, i) => {
                                                     return (
                                                         <li key={i} className="w-100">
-                                                            <a href={listItem.href} className="w-100">
-                                                                {listItem.title}
-                                                            </a>
+                                                            <ActiveLink
+                                                                activeClassName="active"
+                                                                href={listItem.href}
+                                                                className="w-100"
+                                                            >
+                                                                <span className="span-item">{listItem.title}</span>
+                                                            </ActiveLink>
                                                         </li>
                                                     );
                                                 })}

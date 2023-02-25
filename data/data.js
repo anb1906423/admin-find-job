@@ -11,12 +11,12 @@ export const menu = [
         title: 'Tất cả công việc',
         href: '/tat-ca-cong-viec',
         list: [],
-        icon: <IconDashBoard />,
+        icon: <i className="bi bi-app-indicator"></i>,
     },
     {
         title: 'Quản lý tài khoản',
         href: '#',
-        icon: <IconDashBoard />,
+        icon: <i className="bi bi-person-video3"></i>,
         list: [
             {
                 title: 'Nhà tuyển dụng',
@@ -31,7 +31,7 @@ export const menu = [
     {
         title: 'Quản lý danh mục',
         href: '#',
-        icon: <IconDashBoard />,
+        icon: <i className="bi bi-phone-landscape"></i>,
         list: [
             {
                 title: 'Bằng cấp',

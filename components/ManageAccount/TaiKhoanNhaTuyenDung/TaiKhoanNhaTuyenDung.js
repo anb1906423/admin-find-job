@@ -6,16 +6,16 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
 
-import styles from './taikhoanungvien.module.scss';
+import styles from './taikhoannhatuyendung.module.scss';
 import Heading from '@/components/Heading';
-import { getAllAccountUngVien } from '@/services';
+import { getAllAccountNhaTuyenDung } from '@/services';
 import Loading from '@/app/@func/Loading';
 import PreViewAccount from '@/app/components/PreViewAccount/PreViewAccount';
 import Wrapper from '@/app/components/Popper/Wrapper';
 
 const cx = classNames.bind(styles);
 
-function TaiKhoanUngVien() {
+function TaiKhoanNhaTuyenDung() {
     const [data, setData] = useState([]);
     const [number, setNumber] = useState(9);
     const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +25,7 @@ function TaiKhoanUngVien() {
             try {
                 setIsLoading(true);
 
-                const Res = await getAllAccountUngVien();
+                const Res = await getAllAccountNhaTuyenDung();
 
                 if (Res && Res.data.length > 0) {
                     setData(Res.data);
@@ -43,7 +43,7 @@ function TaiKhoanUngVien() {
     const PreviewAccount = (item) => {
         return (
             <Wrapper>
-                <PreViewAccount data={item} />
+                <PreViewAccount isNhaTuyenDung={true} data={item} />
             </Wrapper>
         );
     };
@@ -56,11 +56,11 @@ function TaiKhoanUngVien() {
                 <thead className="table-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Họ và tên</th>
+                        <th scope="col">Tên nhà tuyển dụng</th>
                         <th scope="col">Email</th>
                         <th scope="col">SDT</th>
                         <th scope="col">Địa chỉ</th>
-                        <th scope="col">Vị trí mong muốn</th>
+                        <th scope="col">Mã số thuế</th>
                         <th scope="col" className="text-center">
                             Hành động
                         </th>
@@ -80,11 +80,11 @@ function TaiKhoanUngVien() {
                                 >
                                     <tr key={id} className={cx('item-account')}>
                                         <td>{index + 1}</td>
-                                        <td>{item.hoVaTen ? item.hoVaTen : 'Đang Cập Nhật'}</td>
+                                        <td>{item.tenCty ? item.tenCty : 'Đang Cập Nhật'}</td>
                                         <td>{item.email ? item.email : 'Đang Cập Nhật'}</td>
                                         <td>{item.soDienThoai ? item.soDienThoai : 'Đang Cập Nhật'}</td>
                                         <td>{item.diaChi ? item.diaChi : 'Đang Cập Nhật'}</td>
-                                        <td>{item.viTriMongMuon ? item.viTriMongMuon : 'Đang Cập Nhật'}</td>
+                                        <td>{item.maSoThue ? item.maSoThue : 'Đang Cập Nhật'}</td>
                                         <td className="text-center">
                                             <button className="btn" title="Xóa tài khoản ứng viên">
                                                 <i className="bi bi-trash2"></i>
@@ -103,6 +103,6 @@ function TaiKhoanUngVien() {
     );
 }
 
-TaiKhoanUngVien.propTypes = {};
+TaiKhoanNhaTuyenDung.propTypes = {};
 
-export default TaiKhoanUngVien;
+export default TaiKhoanNhaTuyenDung;
