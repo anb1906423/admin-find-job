@@ -64,7 +64,7 @@ function TippyRender({ items = [], children, onChange = defaultFn, hdeOnClick = 
         <div className="d-inline-block">
             <Tippy
                 zIndex={99}
-                delay={[0, 70000]}
+                delay={[0, 700]}
                 offset={[20, 8]}
                 hideOnClick={hdeOnClick}
                 interactive
