@@ -33,9 +33,9 @@ function HeaderRight(props) {
     return (
         <div className={cx('wp')}>
             <div className={cx('left')}>
-                <button>
+                {/* <button>
                     <i className="bi bi-search"></i>
-                </button>
+                </button> */}
             </div>
             <div className={cx('right')}>
                 <div className={cx('notify')}>

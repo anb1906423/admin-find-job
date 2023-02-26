@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { DashOutlined, DeleteOutlined } from '@ant-design/icons';
 
 function SupperComponents({
     titleAll,
@@ -59,7 +60,7 @@ function SupperComponents({
                                                         }
                                                         className="btn mx-1"
                                                     >
-                                                        <i className="bi bi-trash2"></i>
+                                                        <DeleteOutlined />
                                                     </button>
                                                     <button
                                                         onClick={() =>
@@ -70,7 +71,7 @@ function SupperComponents({
                                                         }
                                                         className="btn mx-1"
                                                     >
-                                                        <i className="bi bi-menu-up"></i>
+                                                        <DashOutlined />
                                                     </button>
                                                 </td>
                                             </tr>

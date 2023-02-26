@@ -1,22 +1,22 @@
-import { IconDashBoard } from '@/app/icons';
+import { UserOutlined, PieChartOutlined, FileDoneOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 
 export const menu = [
     {
         title: 'Dashboard',
         href: '/',
         list: [],
-        icon: <IconDashBoard />,
+        icon: <PieChartOutlined />,
     },
     {
         title: 'Tất cả công việc',
         href: '/tat-ca-cong-viec',
         list: [],
-        icon: <i className="bi bi-app-indicator"></i>,
+        icon: <FileDoneOutlined />,
     },
     {
         title: 'Quản lý tài khoản',
         href: '#',
-        icon: <i className="bi bi-person-video3"></i>,
+        icon: <UserOutlined />,
         list: [
             {
                 title: 'Nhà tuyển dụng',
@@ -31,7 +31,7 @@ export const menu = [
     {
         title: 'Quản lý danh mục',
         href: '#',
-        icon: <i className="bi bi-phone-landscape"></i>,
+        icon: <MenuUnfoldOutlined />,
         list: [
             {
                 title: 'Bằng cấp',
