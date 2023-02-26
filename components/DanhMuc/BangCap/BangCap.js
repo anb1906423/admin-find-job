@@ -120,7 +120,7 @@ function BangCapComponent(props) {
                 .fire({
                     title: 'Bạn chắc chắn với hành động của mình?',
                     icon: 'warning',
-                    text: 'hành động xóa sẽ không thể khôi phục lại được !',
+                    text: 'Hành động xóa sẽ không thể khôi phục lại được!',
                     showCloseButton: true,
                     showCancelButton: true,
                 })

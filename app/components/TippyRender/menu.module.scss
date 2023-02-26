@@ -21,7 +21,13 @@
 }
 
 .menu-body {
-    // pending handle css
+    span:first-child {
+        display: flex;
+        align-items: center;
+        span {
+            padding: 0px 2px;
+        }
+    }
 }
 
 .header-back-wrapper {

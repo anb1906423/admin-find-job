@@ -29,7 +29,7 @@ function SupperComponents({
                 <div className={cx('content-item')}>
                     <h3 className="text-center pb-3">{titleAll}</h3>
                     <div className={cx('content-body-render')}>
-                        <table className="table">
+                        <table className="table table-hover align-middle table-primary">
                             <thead className="table-dark">
                                 <tr>
                                     <th scope="col">#</th>
