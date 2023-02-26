@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 function BangCapComponent(props) {
     // nếu isAddBangCap = true thì sẽ cho add không thì ta sẽ show ra tất cả bằng cấp hiện có
     const [isAddBangCap, setIsAddBangCap] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <div className={cx('wp')}>

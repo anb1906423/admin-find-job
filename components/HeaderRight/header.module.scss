@@ -1,18 +1,19 @@
 .wp {
-    height          : var(--height-header-right);
-    display         : flex;
-    justify-content : space-between;
-    align-items     : center;
-    padding         : 0 20px;
-    padding-right   : 30px;
-    color           : rgb(255, 255, 255);
-    box-shadow      : none;
-    backdrop-filter : blur(6px);
-    background-color: rgba(249, 250, 251, 0.72);
-    position        : fixed;
-    top             : 0;
-    right           : 18px;
-    left            : 25%;
+    height             : var(--height-header-right);
+    display            : flex;
+    justify-content    : space-between;
+    align-items        : center;
+    padding            : 0 20px;
+    padding-right      : 30px;
+    color              : rgb(255, 255, 255);
+    // backdrop-filter : blur(6px);
+    background-color   : #fff;
+    position           : fixed;
+    top                : 0;
+    right              : 18px;
+    left               : 23.5%;
+    box-shadow         : #000000 -1px 6px 8px -7px;
+    z-index            : 1000;
 }
 
 .left {

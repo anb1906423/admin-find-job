@@ -2,6 +2,7 @@ import React, { Children, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import { DeleteFilled } from '@ant-design/icons'
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
@@ -52,9 +53,9 @@ function TaiKhoanUngVien() {
         <div className={cx('tai-khoan-ung-vien-wp')}>
             {isLoading && <Loading />}
             <Heading title="Danh Sách Tài Khoản Ứng Viên" />
-            <table className="table">
+            <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
-                    <tr>
+                    <tr className=''>
                         <th scope="col">#</th>
                         <th scope="col">Họ và tên</th>
                         <th scope="col">Email</th>
@@ -72,26 +73,26 @@ function TaiKhoanUngVien() {
                             const id = uuidv4();
 
                             return (
-                                <Tippy
-                                    key={id}
-                                    delay={[50, 100]}
-                                    placement="bottom-start"
-                                    render={() => PreviewAccount(item)}
-                                >
-                                    <tr key={id} className={cx('item-account')}>
-                                        <td>{index + 1}</td>
-                                        <td>{item.hoVaTen ? item.hoVaTen : 'Đang Cập Nhật'}</td>
-                                        <td>{item.email ? item.email : 'Đang Cập Nhật'}</td>
-                                        <td>{item.soDienThoai ? item.soDienThoai : 'Đang Cập Nhật'}</td>
-                                        <td>{item.diaChi ? item.diaChi : 'Đang Cập Nhật'}</td>
-                                        <td>{item.viTriMongMuon ? item.viTriMongMuon : 'Đang Cập Nhật'}</td>
-                                        <td className="text-center">
-                                            <button className="btn" title="Xóa tài khoản ứng viên">
-                                                <i className="bi bi-trash2"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </Tippy>
+                                // <Tippy
+                                //     key={id}
+                                //     delay={[50, 100]}
+                                //     placement="bottom-start"
+                                //     render={() => PreviewAccount(item)}
+                                // >
+                                // </Tippy>
+                                <tr key={id} className={cx('item-account')}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.hoVaTen ? item.hoVaTen : 'None'}</td>
+                                    <td>{item.email ? item.email : 'None'}</td>
+                                    <td>{item.soDienThoai ? item.soDienThoai : 'None'}</td>
+                                    <td>{item.diaChi ? item.diaChi : 'None'}</td>
+                                    <td>{item.viTriMongMuon ? item.viTriMongMuon : 'None'}</td>
+                                    <td className="text-center">
+                                        <button className="btn" title="Xóa tài khoản ứng viên">
+                                            <DeleteFilled />
+                                        </button>
+                                    </td>
+                                </tr>
                             );
                         })}
                 </tbody>
