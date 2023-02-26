@@ -22,7 +22,7 @@ const Section = () => {
                     <Image className="logo" src={Logo} alt="Hình ảnh logo" />
                 </Link>
             </div>
-            <div className="item-user-admin">
+            {/* <div className="item-user-admin">
                 <div className="item-user-admin--modifined">
                     <img
                         src="https://dashboard-design-patern-ps7gbtrky-truongson09112003.vercel.app/static/mock-images/avatars/avatar_default.jpg"
@@ -33,7 +33,7 @@ const Section = () => {
                         <span>Quản trị viên website</span>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div>
                 <ul className="menu">
                     {menu &&
