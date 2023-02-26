@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 
 import styles from './header.module.scss';
 import { IconNotyfy } from '@/app/icons';
+import { UserOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons'
 import TippyRender from '@/app/components/TippyRender/TippyRender';
 
 const cx = classNames.bind(styles);
@@ -10,17 +11,17 @@ const cx = classNames.bind(styles);
 export const Menu = [
     {
         title: 'Xem trang cá nhân',
-        icon: <i className="bi bi-person"></i>,
+        icon: <UserOutlined />,
         to: '/tai-khoan-cua-toi',
     },
     {
         title: 'Tạo thêm tài khoản admin',
-        icon: <i className="bi bi-filetype-css"></i>,
+        icon: <UserAddOutlined />,
         to: '/quan-ly-tai-khoan/tao-moi-tai-khoan',
     },
     {
         title: 'Đăng xuất',
-        icon: <i className="bi bi-filetype-css"></i>,
+        icon: <LogoutOutlined />,
         to: '/logout',
     },
 ];

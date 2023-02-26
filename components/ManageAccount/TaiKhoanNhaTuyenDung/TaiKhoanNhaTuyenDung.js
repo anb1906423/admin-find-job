@@ -53,7 +53,7 @@ function TaiKhoanNhaTuyenDung() {
     return (
         <div className={cx('tai-khoan-ung-vien-wp')}>
             {isLoading && <Loading />}
-            <Heading title="Danh Sách Tài Khoản Ứng Viên" />
+            <Heading title="Danh Sách Tài Khoản Nhà Tuyển Dụng" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
                     <tr>

@@ -1,166 +1,195 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 import styles from './bangcap.module.scss';
 import Loading from '@/app/@func/Loading/Loading';
+import SupperComponents from '@/app/components/SupperComponents/SupperComponents';
+import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitchButton';
+import { createNewBangCap, deleteBangCap, getAllBangCap, updateBangCap } from '@/services';
+import { swalert } from '@/mixin/swal.mixin';
+import _ from 'lodash';
 
 const cx = classNames.bind(styles);
 
 function BangCapComponent(props) {
+    const buttonArray = ['Tất cả bằng cấp', 'Tạo mới bằng cấp'];
+
     // nếu isAddBangCap = true thì sẽ cho add không thì ta sẽ show ra tất cả bằng cấp hiện có
-    const [isAddBangCap, setIsAddBangCap] = useState(false);
+    const [indexClick, setIndexClick] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+    const [dataBangCap, setDataBangCap] = useState([]);
+
+    const [idAction, setIdAction] = useState(null);
+    const [typeAction, setTypeAction] = useState('');
+
+    const [ten, setTen] = useState('');
+    const [donViDaoTao, setDonViDaoTao] = useState('');
+    const [xepLoai, setXepLoai] = useState('');
+
+    const fetch = async () => {
+        setIsLoading(true);
+
+        try {
+            const Res = await getAllBangCap();
+
+            const { data } = Res;
+
+            if (data) {
+                setDataBangCap(data);
+            }
+        } catch (error) {
+            //handle xử lí khi gặp lỗi tai đây
+        }
+
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+        fetch();
+    }, []);
+
+    const handleButtonClick = (index) => {
+        setIndexClick(index + 1);
+        setTypeAction('');
+        setTen('');
+        setDonViDaoTao('');
+        setXepLoai('');
+        setIdAction(null);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!ten || !donViDaoTao || !xepLoai) return;
+
+        const dataBuild = {
+            ten,
+            donViDaoTao,
+            xepLoai,
+        };
+
+        setIsLoading(true);
+
+        try {
+            typeAction === 'EDIT' ? await updateBangCap(idAction, dataBuild) : await createNewBangCap(dataBuild);
+            fetch();
+            setTen('');
+            setDonViDaoTao('');
+            setXepLoai('');
+
+            swalert
+                .fire({
+                    title: 'Đã thực hiện thành công hành động!',
+                    icon: 'warning',
+                    text: 'Bạn đã tạo thành công bằng cấp',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                })
+                .then(async (result) => {
+                    if (result.isConfirmed) {
+                        setIndexClick(1);
+                    }
+
+                    if (result.dismiss) {
+                        setIndexClick(1);
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
+
+        setIsLoading(false);
+    };
+
+    const handlePerformAction = ({ item, type }) => {
+        if (_.isEmpty(item) || !type) {
+            alert('Hàm thực hiện hành động thiếu tham số!');
+            return;
+        }
+
+        if (type === 'EDIT') {
+            setIdAction(item.id);
+            setTypeAction(type);
+            setTen(item.ten);
+            setDonViDaoTao(item.donViDaoTao);
+            setXepLoai(item.xepLoai);
+            setIndexClick(2);
+        } else {
+            swalert
+                .fire({
+                    title: 'Bạn chắc chắn với hành động của mình?',
+                    icon: 'warning',
+                    text: 'hành động xóa sẽ không thể khôi phục lại được !',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                })
+                .then(async (result) => {
+                    if (result.isConfirmed) {
+                        await deleteBangCap(item.id);
+                        fetch();
+                    }
+
+                    if (result.dismiss) {
+                        setIndexClick(1);
+                    }
+                });
+        }
+    };
 
     return (
         <div className={cx('wp')}>
             {isLoading && <Loading />}
-            <div className={cx('wp-btn-switch')}>
-                <button
-                    onClick={() => setIsAddBangCap(false)}
-                    className={cx('btn', isAddBangCap ? 'btn-primary' : 'btn-warning')}
-                >
-                    Tất cả bằng cấp
-                </button>
-                <button
-                    onClick={() => setIsAddBangCap(true)}
-                    className={cx('btn', isAddBangCap ? 'btn-warning' : 'btn-primary')}
-                >
-                    Thêm bằng cấp
-                </button>
-            </div>
-            <div className={cx('content')}>
-                {isAddBangCap ? (
-                    <div className={cx('content-item')}>
-                        <h3 className="text-center pb-3">Thêm mới bằng cấp</h3>
-                        <div className={cx('content-body-render')}>
-                            <div className={cx('wp-form')}>
-                                <form>
-                                    <div className={cx('item')}>
-                                        <label htmlFor="hoten">Tên bằng cấp của bạn</label>
-                                        <input
-                                            className="form-control"
-                                            id="hoten"
-                                            placeholder="eg: Bằng đại học cử nhân"
-                                            required
-                                        />
-                                    </div>
-                                    <div className={cx('item')}>
-                                        <label htmlFor="don-vi-dao-tao">Đơn vị đào tạo</label>
-                                        <input
-                                            className="form-control"
-                                            id="don-vi-dao-tao"
-                                            placeholder="eg: Đại Học Cần Thơ"
-                                            required
-                                        />
-                                    </div>
-                                    <div className={cx('item')}>
-                                        <label htmlFor="xep-loai">Xếp loại</label>
-                                        <input
-                                            className="form-control"
-                                            id="xep-loai"
-                                            placeholder="eg: Giỏi, khá, trung bình, xuất sắc"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <button className="btn btn-success">Thêm mới bằng cấp</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    <div className={cx('content-item')}>
-                        <h3 className="text-center pb-3">Tất cả bằng cấp của bạn</h3>
-                        <div className={cx('content-body-render')}>
-                            <table className="table">
-                                <thead className="table-dark">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tên</th>
-                                        <th scope="col">Đơn vị đào tạo</th>
-                                        <th scope="col">Xếp loại</th>
-                                        <th scope="col">Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Bằng cử nhân</td>
-                                        <td>Đại học cần thơ</td>
-                                        <td>Xuất Sắc</td>
-                                        <td>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-trash2"></i>
-                                            </button>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-menu-up"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Bằng cử nhân</td>
-                                        <td>Đại học cần thơ</td>
-                                        <td>Xuất Sắc</td>
-                                        <td>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-trash2"></i>
-                                            </button>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-menu-up"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Bằng cử nhân</td>
-                                        <td>Đại học cần thơ</td>
-                                        <td>Xuất Sắc</td>
-                                        <td>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-trash2"></i>
-                                            </button>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-menu-up"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>Bằng cử nhân</td>
-                                        <td>Đại học cần thơ</td>
-                                        <td>Xuất Sắc</td>
-                                        <td>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-trash2"></i>
-                                            </button>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-menu-up"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td>Bằng cử nhân</td>
-                                        <td>Đại học cần thơ</td>
-                                        <td>Xuất Sắc</td>
-                                        <td>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-trash2"></i>
-                                            </button>
-                                            <button className="btn mx-1">
-                                                <i className="bi bi-menu-up"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
-            </div>
+            <SupperSwitchButton onButtonClick={handleButtonClick} buttonArray={buttonArray} />
+            <SupperComponents
+                titleAll="Tất cả bằng cấp của bạn"
+                titleAdd="Thêm mới bằng cấp"
+                data={dataBangCap}
+                isAdd={indexClick === 1 ? false : true}
+                cx={cx}
+                isBangCap={true}
+                handleSubmit={handleSubmit}
+                handlePerformAction={handlePerformAction}
+            >
+                <div className={cx('item')}>
+                    <label htmlFor="hoten">Tên bằng cấp của bạn</label>
+                    <input
+                        onChange={(e) => setTen(e.target.value)}
+                        value={ten}
+                        className="form-control"
+                        id="hoten"
+                        placeholder="eg: Bằng đại học cử nhân"
+                        required
+                    />
+                </div>
+                <div className={cx('item')}>
+                    <label htmlFor="don-vi-dao-tao">Đơn vị đào tạo</label>
+                    <input
+                        onChange={(e) => setDonViDaoTao(e.target.value)}
+                        value={donViDaoTao}
+                        className="form-control"
+                        id="don-vi-dao-tao"
+                        placeholder="eg: Đại Học Cần Thơ"
+                        required
+                    />
+                </div>
+                <div className={cx('item')}>
+                    <label htmlFor="xep-loai">Xếp loại</label>
+                    <input
+                        onChange={(e) => setXepLoai(e.target.value)}
+                        value={xepLoai}
+                        className="form-control"
+                        id="xep-loai"
+                        placeholder="eg: Giỏi, khá, trung bình, xuất sắc"
+                        required
+                    />
+                </div>
+                <div>
+                    <button className="btn btn-success">
+                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'Thêm mới bằng cấp'}
+                    </button>
+                </div>
+            </SupperComponents>
         </div>
     );
 }
