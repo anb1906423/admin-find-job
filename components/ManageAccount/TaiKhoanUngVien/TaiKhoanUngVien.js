@@ -6,6 +6,7 @@ import { DeleteFilled } from '@ant-design/icons'
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
+import { Switch } from 'antd';
 
 import styles from './taikhoanungvien.module.scss';
 import Heading from '@/components/Heading';
@@ -88,9 +89,7 @@ function TaiKhoanUngVien() {
                                     <td>{item.diaChi ? item.diaChi : 'None'}</td>
                                     <td>{item.viTriMongMuon ? item.viTriMongMuon : 'None'}</td>
                                     <td className="text-center">
-                                        <button className="btn" title="Xóa tài khoản ứng viên">
-                                            <DeleteFilled />
-                                        </button>
+                                        <Switch size="small" defaultChecked />
                                     </td>
                                 </tr>
                             );
