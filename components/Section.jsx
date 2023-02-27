@@ -32,7 +32,7 @@ const Section = () => {
                                         onClick={() => handleClick(index)}
                                         className="element-a-left"
                                         activeClassName="active"
-                                        href={item.href}
+                                        href={item.href != '#' ? item.href : ''}
                                     >
                                         <>
                                             <span>{item.icon}</span>
