@@ -11,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="dashboard">
-        <Header title="Dashboard" />
+        {/* <Header title="Dashboard" /> */}
       </div>
     </>
   )
