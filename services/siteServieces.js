@@ -27,3 +27,51 @@ export const updateBangCap = (id, data) => {
 export const deleteBangCap = (id) => {
     return axios.delete(`/bang-cap/${id}`);
 };
+
+export const getAllCapBac = () => {
+    return axios.get(`/cap-bac`);
+};
+
+export const createNewCapBac = (data) => {
+    return axios.post(`/cap-bac`, data);
+};
+
+export const updateCapBac = (id, data) => {
+    return axios.put(`/cap-bac/${id}`, data);
+};
+
+export const deleteCapBac = (id) => {
+    return axios.delete(`/cap-bac/${id}`);
+};
+
+export const getAllDiaDiemLamViec = () => {
+    return axios.get(`/dia-diem-lam-viec`);
+};
+
+export const createNewDiaDiemLamViec = (data) => {
+    return axios.post(`/dia-diem-lam-viec`, data);
+};
+
+export const updateDiaDiemLamViec = (id, data) => {
+    return axios.put(`/dia-diem-lam-viec/${id}`, data);
+};
+
+export const deleteDiaDiemLamViec = (id) => {
+    return axios.delete(`/dia-diem-lam-viec/${id}`);
+};
+
+export const getAllKinhNghiemLamViec = () => {
+    return axios.get(`/kinh-nghiem`);
+};
+
+export const createNewKinhNghiemLamViec = (data) => {
+    return axios.post(`/kinh-nghiem`, data);
+};
+
+export const updateKinhNghiemLamViec = (id, data) => {
+    return axios.put(`/kinh-nghiem/${id}`, data);
+};
+
+export const deleteKinhNghiemLamViec = (id) => {
+    return axios.delete(`/kinh-nghiem/${id}`);
+};

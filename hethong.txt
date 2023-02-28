@@ -1,0 +1,14 @@
+ - Đối với component về quản lí danh mục lưu ý khi đọc code hãy đọc file SupperComponent trươc,
+   chú ý đên type (EDIT or DELETE) dựa vào 2 type đó để quết định việc xóa và sửa các trường và
+   dựa vào nó để custom button khi sử dụng
+
+ - Về luồng chạy: 
+        b1: SupperSwitchButton sẽ được chạy và render ra các nút tương ứng.
+        b1: SupperComponents sẽ chạy và bên trong nó nhận vào các prop các prop này khá đơn giản có thể đọc ở file
+            - Với hàm RenderNode nó là một component nó sẽ render data đổ về 
+            và khi ta gọi nó ở cha thì ta sẽ truyền cho nó thêm một hàm là handlePerformActions để nó thực hiện hành động thêm sửa và xóa 
+            và do nó là một component nên nó sẽ trả về và khi sử dụng để tăng tính custom nên đã truyền thêm vào nó một component là 
+            SupperRenderNode hàm này sẽ nhận vào children nó chính là phần đầu của thẻ table 
+            và phần thân sẽ là những thẻ mà ta render ở hàm prop mà nó nhận tên là RenderChildren
+            từ đây sẽ kết hợp lại 1 table đầy đủ dữ liệu hay nói một cách khác đó là SupperRenderNode nó sẽ trả về một table 
+            và từ đó sẽ trả về một table và nó sẽ render ra ở bên trong component SupperComponents khi ta gọi đến hàm RenderNode bên trong nó

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,13 +10,13 @@ function SupperComponents({
     cx = () => {},
     children,
     handleSubmit = () => {},
-    isBangCap = false,
     handlePerformAction = () => {},
+    RenderNode = () => {},
 }) {
     return (
         <div className={cx('content')}>
             {isAdd ? (
-                <div className={cx('content-item')}>
+                <div className={cx('content-item pt-4')}>
                     <h3 className="text-center pb-3">{titleAdd}</h3>
                     <div className={cx('content-body-render')}>
                         <div className={cx('wp-form')}>
@@ -25,59 +25,10 @@ function SupperComponents({
                     </div>
                 </div>
             ) : (
-                <div className={cx('content-item')}>
+                <div className={cx('content-item pt-4')}>
                     <h3 className="text-center pb-3">{titleAll}</h3>
                     <div className={cx('content-body-render')}>
-                        <table className="table">
-                            <thead className="table-dark">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">{isBangCap && 'Đơn vị đào tạo'}</th>
-                                    <th scope="col">{isBangCap && 'Xếp loại'}</th>
-                                    <th scope="col">Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data &&
-                                    data.map((item, index) => {
-                                        const id = uuidv4();
-
-                                        return (
-                                            <tr key={id}>
-                                                <th scope="row">{index + 1}</th>
-                                                <td>{item.ten}</td>
-                                                <td>{isBangCap && item.donViDaoTao}</td>
-                                                <td>{isBangCap && item.xepLoai}</td>
-                                                <td>
-                                                    <button
-                                                        onClick={() =>
-                                                            handlePerformAction({
-                                                                item,
-                                                                type: 'DELETE',
-                                                            })
-                                                        }
-                                                        className="btn mx-1"
-                                                    >
-                                                        <i className="bi bi-trash2"></i>
-                                                    </button>
-                                                    <button
-                                                        onClick={() =>
-                                                            handlePerformAction({
-                                                                item,
-                                                                type: 'EDIT',
-                                                            })
-                                                        }
-                                                        className="btn mx-1"
-                                                    >
-                                                        <i className="bi bi-menu-up"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                            </tbody>
-                        </table>
+                        <RenderNode handlePerformAction={handlePerformAction} data={data} />
                     </div>
                 </div>
             )}
@@ -93,6 +44,13 @@ SupperComponents.propTypes = {
     isBangCap: PropTypes.bool,
     data: PropTypes.array.isRequired,
     cx: PropTypes.func,
+    titleAll: PropTypes.string,
+    titleAdd: PropTypes.string,
+    isAdd: PropTypes.bool,
+    children: PropTypes.node,
+    handleSubmit: PropTypes.func,
+    handlePerformAction: PropTypes.func,
+    RenderNode: PropTypes.func,
 };
 
-export default SupperComponents;
+export default memo(SupperComponents);

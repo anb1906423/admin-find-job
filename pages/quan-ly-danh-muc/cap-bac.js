@@ -1,18 +1,19 @@
 import React from 'react';
-import Header from '@/components/Header';
-import BangCapComponent from '@/components/DanhMuc/BangCap/BangCap';
 import Head from 'next/head';
+
+import Header from '@/components/Header';
+import CapBacComponent from '@/components/DanhMuc/CapBac/CapBac';
 
 const BangCap = () => {
     return (
         <>
             <Head>
-                <title>Quản lí bằng cấp website của bạn</title>
+                <title>Quản lí cấp bậc trong CV website của bạn</title>
             </Head>
             <div className="trang-bang-cap">
-                <Header title="Quản lý bằng cấp" />
+                <Header title="Quản lí cấp bậc" />
                 <div>
-                    <BangCapComponent />
+                    <CapBacComponent />
                 </div>
             </div>
         </>

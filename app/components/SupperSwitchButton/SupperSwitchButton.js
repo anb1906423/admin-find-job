@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,6 +34,9 @@ function SupperSwitchButton({ buttonArray, onButtonClick }) {
     );
 }
 
-SupperSwitchButton.propTypes = {};
+SupperSwitchButton.propTypes = {
+    buttonArray: PropTypes.array.isRequired,
+    onButtonClick: PropTypes.func.isRequired,
+};
 
-export default SupperSwitchButton;
+export default memo(SupperSwitchButton);

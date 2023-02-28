@@ -7,37 +7,34 @@ import styles from '../danhmuc.module.scss';
 import Loading from '@/app/@func/Loading/Loading';
 import SupperComponents from '@/app/components/SupperComponents/SupperComponents';
 import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitchButton';
-import { createNewBangCap, deleteBangCap, getAllBangCap, updateBangCap } from '@/services';
+import { createNewDiaDiemLamViec, deleteDiaDiemLamViec, getAllDiaDiemLamViec, updateDiaDiemLamViec } from '@/services';
 import { swalert } from '@/mixin/swal.mixin';
 import _ from 'lodash';
 import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode';
 
 const cx = classNames.bind(styles);
 
-const buttonArray = ['Tất cả bằng cấp', 'Tạo mới bằng cấp'];
-function BangCapComponent(props) {
-    // nếu isAddBangCap = true thì sẽ cho add không thì ta sẽ show ra tất cả bằng cấp hiện có
+const buttonArray = ['Tất cả địa điểm làm việc', 'Tạo mới địa điểm làm việc'];
+function DiaDiemLamViecComponent(props) {
     const [indexClick, setIndexClick] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [dataBangCap, setDataBangCap] = useState([]);
+    const [data, setData] = useState([]);
 
     const [idAction, setIdAction] = useState(null);
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
-    const [donViDaoTao, setDonViDaoTao] = useState('');
-    const [xepLoai, setXepLoai] = useState('');
 
     const fetch = async () => {
         setIsLoading(true);
 
         try {
-            const Res = await getAllBangCap();
+            const Res = await getAllDiaDiemLamViec();
 
             const { data } = Res;
 
             if (data) {
-                setDataBangCap(data);
+                setData(data);
             }
         } catch (error) {
             //handle xử lí khi gặp lỗi tai đây
@@ -54,36 +51,32 @@ function BangCapComponent(props) {
         setIndexClick(index + 1);
         setTypeAction('');
         setTen('');
-        setDonViDaoTao('');
-        setXepLoai('');
         setIdAction(null);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten || !donViDaoTao || !xepLoai) return;
+        if (!ten) return;
 
         const dataBuild = {
             ten,
-            donViDaoTao,
-            xepLoai,
         };
 
         setIsLoading(true);
 
         try {
-            typeAction === 'EDIT' ? await updateBangCap(idAction, dataBuild) : await createNewBangCap(dataBuild);
+            typeAction === 'EDIT'
+                ? await updateDiaDiemLamViec(idAction, dataBuild)
+                : await createNewDiaDiemLamViec(dataBuild);
             fetch();
             setTen('');
-            setDonViDaoTao('');
-            setXepLoai('');
 
             swalert
                 .fire({
                     title: 'Đã thực hiện thành công hành động!',
                     icon: 'warning',
-                    text: 'Bạn đã tạo thành công bằng cấp',
+                    text: 'Bạn đã tạo thành công địa điểm làm việc',
                     showCloseButton: true,
                     showCancelButton: true,
                 })
@@ -113,8 +106,6 @@ function BangCapComponent(props) {
             setIdAction(item.id);
             setTypeAction(type);
             setTen(item.ten);
-            setDonViDaoTao(item.donViDaoTao);
-            setXepLoai(item.xepLoai);
             setIndexClick(2);
         } else {
             swalert
@@ -127,7 +118,7 @@ function BangCapComponent(props) {
                 })
                 .then(async (result) => {
                     if (result.isConfirmed) {
-                        await deleteBangCap(item.id);
+                        await deleteDiaDiemLamViec(item.id);
                         fetch();
                     }
 
@@ -145,9 +136,7 @@ function BangCapComponent(props) {
                     <tr>
                         <th scope="row">{index + 1}</th>
                         <td>{item.ten}</td>
-                        <td>{item.donViDaoTao}</td>
-                        <td>{item.xepLoai}</td>
-                        <td>
+                        <td className="text-center">
                             <button
                                 onClick={() =>
                                     handlePerformActions({
@@ -182,9 +171,9 @@ function BangCapComponent(props) {
             {isLoading && <Loading />}
             <SupperSwitchButton onButtonClick={handleButtonClick} buttonArray={buttonArray} />
             <SupperComponents
-                titleAll="Tất cả bằng cấp của bạn"
-                titleAdd="Thêm mới bằng cấp"
-                data={dataBangCap}
+                titleAll="Tất cả địa điểm làm việc"
+                titleAdd="Thêm mới địa điểm làm việc"
+                data={data}
                 isAdd={indexClick === 1 ? false : true}
                 cx={cx}
                 isBangCap={true}
@@ -193,57 +182,37 @@ function BangCapComponent(props) {
                 RenderNode={() => (
                     <SupperRenderNode
                         handlePerformActions={handlePerformAction}
-                        data={dataBangCap}
+                        data={data}
                         RenderChildren={handleRenderNode}
                     >
                         <thead className="table-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Tên</th>
-                                <th scope="col">{'Đơn vị đào tạo'}</th>
-                                <th scope="col">{'Xếp loại'}</th>
-                                <th scope="col">Hành động</th>
+                                <th scope="col" class="col-9">
+                                    Tên
+                                </th>
+                                <th scope="col" class="col-2 text-center">
+                                    Hành động
+                                </th>
                             </tr>
                         </thead>
                     </SupperRenderNode>
                 )}
             >
                 <div className={cx('item')}>
-                    <label htmlFor="hoten">Tên bằng cấp của bạn</label>
+                    <label htmlFor="hoten">Tên địa điểm làm việc</label>
                     <input
                         onChange={(e) => setTen(e.target.value)}
                         value={ten}
                         className="form-control"
                         id="hoten"
-                        placeholder="eg: Bằng đại học cử nhân"
-                        required
-                    />
-                </div>
-                <div className={cx('item')}>
-                    <label htmlFor="don-vi-dao-tao">Đơn vị đào tạo</label>
-                    <input
-                        onChange={(e) => setDonViDaoTao(e.target.value)}
-                        value={donViDaoTao}
-                        className="form-control"
-                        id="don-vi-dao-tao"
-                        placeholder="eg: Đại Học Cần Thơ"
-                        required
-                    />
-                </div>
-                <div className={cx('item')}>
-                    <label htmlFor="xep-loai">Xếp loại</label>
-                    <input
-                        onChange={(e) => setXepLoai(e.target.value)}
-                        value={xepLoai}
-                        className="form-control"
-                        id="xep-loai"
-                        placeholder="eg: Giỏi, khá, trung bình, xuất sắc"
+                        placeholder="eg: Phú Thọ, Hà Nội, TP Hồ Chí Minh..."
                         required
                     />
                 </div>
                 <div>
                     <button className="btn btn-success">
-                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'Thêm mới bằng cấp'}
+                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'Thêm mới địa điểm'}
                     </button>
                 </div>
             </SupperComponents>
@@ -251,6 +220,6 @@ function BangCapComponent(props) {
     );
 }
 
-BangCapComponent.propTypes = {};
+DiaDiemLamViecComponent.propTypes = {};
 
-export default BangCapComponent;
+export default DiaDiemLamViecComponent;

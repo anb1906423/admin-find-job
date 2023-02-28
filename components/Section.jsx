@@ -9,7 +9,7 @@ const Section = () => {
     const [showMenuItem, setShowMenuItem] = useState({});
 
     const handleClick = (index) => {
-        setShowMenuItem({
+        setShowMenuItem({    
             ...showMenuItem,
             [index]: !showMenuItem[index],
         });
