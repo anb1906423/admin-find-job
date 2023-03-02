@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import KinhNghiemComponent from '@/components/DanhMuc/KinhNghiem/KinhNghiem';
 
-const BangCap = () => {
+const KinhNghiem = () => {
     return (
         <>
             <Head>
@@ -20,4 +20,4 @@ const BangCap = () => {
     );
 };
 
-export default BangCap;
+export default KinhNghiem;

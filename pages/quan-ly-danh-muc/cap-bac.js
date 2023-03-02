@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import CapBacComponent from '@/components/DanhMuc/CapBac/CapBac';
 
-const BangCap = () => {
+const CapBac = () => {
     return (
         <>
             <Head>
@@ -20,4 +20,4 @@ const BangCap = () => {
     );
 };
 
-export default BangCap;
+export default CapBac;

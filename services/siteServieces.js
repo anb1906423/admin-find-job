@@ -75,3 +75,51 @@ export const updateKinhNghiemLamViec = (id, data) => {
 export const deleteKinhNghiemLamViec = (id) => {
     return axios.delete(`/kinh-nghiem/${id}`);
 };
+
+export const getAllLinhVucKinhDoanh = () => {
+    return axios.get('/linh-vuc-kinh-doanh');
+};
+
+export const createNewLinhVucKinhDoanh = (data) => {
+    return axios.post('/linh-vuc-kinh-doanh', data);
+};
+
+export const updateLinhVucKinhDoanh = (id, data) => {
+    return axios.put(`/linh-vuc-kinh-doanh/${id}`, data);
+};
+
+export const deleteLinhVucKinhDoanh = (id) => {
+    return axios.delete(`/linh-vuc-kinh-doanh/${id}`);
+};
+
+export const getAllLoaiHinhDoanhNghiep = () => {
+    return axios.get('/loai-hinh-doanh-nghiep');
+};
+
+export const createNewLoaiHinhDoanhNghiep = (data) => {
+    return axios.post('/loai-hinh-doanh-nghiep', data);
+};
+
+export const updateLoaiHinhDoanhNghiep = (id, data) => {
+    return axios.put(`/loai-hinh-doanh-nghiep/${id}`, data);
+};
+
+export const deleteLoaiHinhDoanhNghiep = (id) => {
+    return axios.delete(`/loai-hinh-doanh-nghiep/${id}`);
+};
+
+export const getAllLoaiHopDong = () => {
+    return axios.get(`/loai-hop-dong`);
+};
+
+export const createNewLoaiHopDong = (data) => {
+    return axios.post(`/loai-hop-dong`, data);
+};
+
+export const updateLoaiHopDong = (id, data) => {
+    return axios.put(`/loai-hop-dong/${id}`, data);
+};
+
+export const deleteLoaiHopDong = (id) => {
+    return axios.delete(`/loai-hop-dong/${id}`);
+};
