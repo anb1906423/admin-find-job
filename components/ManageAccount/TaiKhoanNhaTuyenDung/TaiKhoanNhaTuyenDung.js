@@ -1,10 +1,6 @@
 import React, { Children, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-<<<<<<< HEAD
-import { DeleteFilled } from '@ant-design/icons'
-=======
->>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
 import { Switch } from 'antd';
 import { useState } from 'react';
 import _ from 'lodash';
@@ -18,7 +14,7 @@ import Loading from '@/app/@func/Loading';
 import PreViewAccount from '@/app/components/PreViewAccount/PreViewAccount';
 import Wrapper from '@/app/components/Popper/Wrapper';
 import axios from 'axios';
-import { backendAPI } from '../../../config'
+import { backendAPI } from '../../../config';
 import { swalert, swtoast } from '@/mixin/swal.mixin';
 
 const cx = classNames.bind(styles);
@@ -50,9 +46,9 @@ function TaiKhoanNhaTuyenDung() {
     }, []);
 
     const refreshData = async () => {
-        const result = await axios.get(backendAPI + '/nha-tuyen-dung')
-        setData(result.data)
-    }
+        const result = await axios.get(backendAPI + '/nha-tuyen-dung');
+        setData(result.data);
+    };
 
     const handleUpdateState = async (item, id) => {
         try {
@@ -65,7 +61,7 @@ function TaiKhoanNhaTuyenDung() {
 
             // Update the item state with the new value returned from the API
             console.log(updatedItem);
-            refreshData()
+            refreshData();
         } catch (error) {
             console.error(error);
             swtoast.error({ text: 'Xảy ra lỗi khi thay đổi trạng thái nhà tuyển dụng!' });
@@ -85,11 +81,7 @@ function TaiKhoanNhaTuyenDung() {
     return (
         <div className={cx('tai-khoan-ung-vien-wp')}>
             {isLoading && <Loading />}
-<<<<<<< HEAD
-            <Heading title="Danh Sách Tài Khoản Ứng Viên" />
-=======
             <Heading title="Danh Sách Tài Khoản Nhà Tuyển Dụng" />
->>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
                     <tr>
@@ -125,16 +117,12 @@ function TaiKhoanNhaTuyenDung() {
                                     <td>{item.diaChi ? item.diaChi : 'None'}</td>
                                     <td>{item.maSoThue ? item.maSoThue : 'None'}</td>
                                     <td className="text-center">
-<<<<<<< HEAD
-                                            <Switch size="small" defaultChecked />
-=======
                                         <Switch
                                             size="small"
                                             checked={item.state}
                                             onChange={() => handleUpdateState(item, item.id)}
                                             disabled={disabledInputState}
                                         />
->>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
                                     </td>
                                 </tr>
                             );

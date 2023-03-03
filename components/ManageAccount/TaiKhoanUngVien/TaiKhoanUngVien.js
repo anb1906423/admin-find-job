@@ -2,7 +2,7 @@ import React, { Children, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { DeleteFilled } from '@ant-design/icons'
+import { DeleteFilled } from '@ant-design/icons';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
@@ -15,7 +15,7 @@ import Loading from '@/app/@func/Loading';
 import PreViewAccount from '@/app/components/PreViewAccount/PreViewAccount';
 import Wrapper from '@/app/components/Popper/Wrapper';
 import axios from 'axios';
-import { backendAPI } from '../../../config'
+import { backendAPI } from '../../../config';
 import { swalert, swtoast } from '@/mixin/swal.mixin';
 
 const cx = classNames.bind(styles);
@@ -46,9 +46,9 @@ function TaiKhoanUngVien() {
     }, []);
 
     const refreshData = async () => {
-        const result = await axios.get(backendAPI + '/ung-vien')
-        setData(result.data)
-    }
+        const result = await axios.get(backendAPI + '/ung-vien');
+        setData(result.data);
+    };
 
     const handleUpdateState = async (item, id) => {
         try {
@@ -61,7 +61,7 @@ function TaiKhoanUngVien() {
 
             // Update the item state with the new value returned from the API
             console.log(updatedItem);
-            refreshData()
+            refreshData();
         } catch (error) {
             console.error(error);
             swtoast.error({ text: 'Xảy ra lỗi khi thay đổi trạng thái ứng viên!' });
@@ -84,7 +84,7 @@ function TaiKhoanUngVien() {
             <Heading title="Danh Sách Tài Khoản Ứng Viên" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
-                    <tr className=''>
+                    <tr className="">
                         <th scope="col">#</th>
                         <th scope="col">Họ và tên</th>
                         <th scope="col">Email</th>
@@ -117,16 +117,12 @@ function TaiKhoanUngVien() {
                                     <td>{item.diaChi ? item.diaChi : 'None'}</td>
                                     <td>{item.viTriMongMuon ? item.viTriMongMuon : 'None'}</td>
                                     <td className="text-center">
-<<<<<<< HEAD
-                                        <Switch size="small" defaultChecked />
-=======
                                         <Switch
                                             size="small"
                                             defaultChecked={item.state}
                                             onChange={() => handleUpdateState(item, item.id)}
                                             disabled={disabledInputState}
                                         />
->>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
                                     </td>
                                 </tr>
                             );
