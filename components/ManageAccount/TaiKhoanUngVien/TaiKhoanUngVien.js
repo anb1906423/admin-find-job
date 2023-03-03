@@ -14,13 +14,16 @@ import { getAllAccountUngVien } from '@/services';
 import Loading from '@/app/@func/Loading';
 import PreViewAccount from '@/app/components/PreViewAccount/PreViewAccount';
 import Wrapper from '@/app/components/Popper/Wrapper';
+import axios from 'axios';
+import { backendAPI } from '../../../config'
+import { swalert, swtoast } from '@/mixin/swal.mixin';
 
 const cx = classNames.bind(styles);
 
 function TaiKhoanUngVien() {
     const [data, setData] = useState([]);
-    const [number, setNumber] = useState(9);
     const [isLoading, setIsLoading] = useState(false);
+    const [disabledInputState, setDisabledInputState] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -41,6 +44,31 @@ function TaiKhoanUngVien() {
 
         fetch();
     }, []);
+
+    const refreshData = async () => {
+        const result = await axios.get(backendAPI + '/ung-vien')
+        setData(result.data)
+    }
+
+    const handleUpdateState = async (item, id) => {
+        try {
+            setDisabledInputState(true);
+
+            // Call the appropriate API based on the current state of the item
+            const updatedItem = item.state
+                ? await axios.put(backendAPI + '/ung-vien/off', { ung_vien_id: id })
+                : await axios.put(backendAPI + '/ung-vien/on', { ung_vien_id: id });
+
+            // Update the item state with the new value returned from the API
+            console.log(updatedItem);
+            refreshData()
+        } catch (error) {
+            console.error(error);
+            swtoast.error({ text: 'Xảy ra lỗi khi thay đổi trạng thái ứng viên!' });
+        } finally {
+            setDisabledInputState(false);
+        }
+    };
 
     const PreviewAccount = (item) => {
         return (
@@ -89,7 +117,16 @@ function TaiKhoanUngVien() {
                                     <td>{item.diaChi ? item.diaChi : 'None'}</td>
                                     <td>{item.viTriMongMuon ? item.viTriMongMuon : 'None'}</td>
                                     <td className="text-center">
+<<<<<<< HEAD
                                         <Switch size="small" defaultChecked />
+=======
+                                        <Switch
+                                            size="small"
+                                            defaultChecked={item.state}
+                                            onChange={() => handleUpdateState(item, item.id)}
+                                            disabled={disabledInputState}
+                                        />
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
                                     </td>
                                 </tr>
                             );

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useCallback, useEffect, useState } from 'react';
+=======
+import React, { useEffect, useState } from 'react';
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,12 +14,17 @@ import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitch
 import { createNewBangCap, deleteBangCap, getAllBangCap, updateBangCap } from '@/services';
 import { swalert } from '@/mixin/swal.mixin';
 import _ from 'lodash';
+<<<<<<< HEAD
 import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode';
+=======
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
 
 const cx = classNames.bind(styles);
 
 const buttonArray = ['Tất cả bằng cấp', 'Tạo mới bằng cấp'];
 function BangCapComponent(props) {
+    const buttonArray = ['Tất cả bằng cấp', 'Tạo mới bằng cấp'];
+
     // nếu isAddBangCap = true thì sẽ cho add không thì ta sẽ show ra tất cả bằng cấp hiện có
     const [indexClick, setIndexClick] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -121,7 +130,11 @@ function BangCapComponent(props) {
                 .fire({
                     title: 'Bạn chắc chắn với hành động của mình?',
                     icon: 'warning',
+<<<<<<< HEAD
                     text: 'hành động xóa sẽ không thể khôi phục lại được !',
+=======
+                    text: 'Hành động xóa sẽ không thể khôi phục lại được!',
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
                     showCloseButton: true,
                     showCancelButton: true,
                 })
@@ -137,6 +150,7 @@ function BangCapComponent(props) {
                 });
         }
     };
+<<<<<<< HEAD
 
     const handleRenderNode = ({ item, handlePerformActions = () => {}, index }) => {
         return (
@@ -176,6 +190,8 @@ function BangCapComponent(props) {
             </tbody>
         );
     };
+=======
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
 
     return (
         <div className={cx('wp')}>
@@ -190,6 +206,7 @@ function BangCapComponent(props) {
                 isBangCap={true}
                 handleSubmit={handleSubmit}
                 handlePerformAction={handlePerformAction}
+<<<<<<< HEAD
                 RenderNode={() => (
                     <SupperRenderNode
                         handlePerformActions={handlePerformAction}
@@ -207,6 +224,8 @@ function BangCapComponent(props) {
                         </thead>
                     </SupperRenderNode>
                 )}
+=======
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
             >
                 <div className={cx('item')}>
                     <label htmlFor="hoten">Tên bằng cấp của bạn</label>

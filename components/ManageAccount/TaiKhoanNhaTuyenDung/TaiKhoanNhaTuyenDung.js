@@ -1,7 +1,10 @@
 import React, { Children, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+<<<<<<< HEAD
 import { DeleteFilled } from '@ant-design/icons'
+=======
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
 import { Switch } from 'antd';
 import { useState } from 'react';
 import _ from 'lodash';
@@ -14,13 +17,16 @@ import { getAllAccountNhaTuyenDung } from '@/services';
 import Loading from '@/app/@func/Loading';
 import PreViewAccount from '@/app/components/PreViewAccount/PreViewAccount';
 import Wrapper from '@/app/components/Popper/Wrapper';
+import axios from 'axios';
+import { backendAPI } from '../../../config'
+import { swalert, swtoast } from '@/mixin/swal.mixin';
 
 const cx = classNames.bind(styles);
 
 function TaiKhoanNhaTuyenDung() {
     const [data, setData] = useState([]);
-    const [number, setNumber] = useState(9);
     const [isLoading, setIsLoading] = useState(false);
+    const [disabledInputState, setDisabledInputState] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -31,6 +37,7 @@ function TaiKhoanNhaTuyenDung() {
 
                 if (Res && Res.data.length > 0) {
                     setData(Res.data);
+                    console.log(data);
                 }
             } catch (error) {
                 console.log(error);
@@ -41,6 +48,31 @@ function TaiKhoanNhaTuyenDung() {
 
         fetch();
     }, []);
+
+    const refreshData = async () => {
+        const result = await axios.get(backendAPI + '/nha-tuyen-dung')
+        setData(result.data)
+    }
+
+    const handleUpdateState = async (item, id) => {
+        try {
+            setDisabledInputState(true);
+
+            // Call the appropriate API based on the current state of the item
+            const updatedItem = item.state
+                ? await axios.put(backendAPI + '/nha-tuyen-dung/off', { nha_tuyen_dung_id: id })
+                : await axios.put(backendAPI + '/nha-tuyen-dung/on', { nha_tuyen_dung_id: id });
+
+            // Update the item state with the new value returned from the API
+            console.log(updatedItem);
+            refreshData()
+        } catch (error) {
+            console.error(error);
+            swtoast.error({ text: 'Xảy ra lỗi khi thay đổi trạng thái nhà tuyển dụng!' });
+        } finally {
+            setDisabledInputState(false);
+        }
+    };
 
     const PreviewAccount = (item) => {
         return (
@@ -53,7 +85,11 @@ function TaiKhoanNhaTuyenDung() {
     return (
         <div className={cx('tai-khoan-ung-vien-wp')}>
             {isLoading && <Loading />}
+<<<<<<< HEAD
             <Heading title="Danh Sách Tài Khoản Ứng Viên" />
+=======
+            <Heading title="Danh Sách Tài Khoản Nhà Tuyển Dụng" />
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
                     <tr>
@@ -64,7 +100,7 @@ function TaiKhoanNhaTuyenDung() {
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Mã số thuế</th>
                         <th scope="col" className="text-center">
-                            Hành động
+                            Trạng thái
                         </th>
                     </tr>
                 </thead>
@@ -89,7 +125,16 @@ function TaiKhoanNhaTuyenDung() {
                                     <td>{item.diaChi ? item.diaChi : 'None'}</td>
                                     <td>{item.maSoThue ? item.maSoThue : 'None'}</td>
                                     <td className="text-center">
+<<<<<<< HEAD
                                             <Switch size="small" defaultChecked />
+=======
+                                        <Switch
+                                            size="small"
+                                            checked={item.state}
+                                            onChange={() => handleUpdateState(item, item.id)}
+                                            disabled={disabledInputState}
+                                        />
+>>>>>>> 8045ba76a529eb3aacd44a28351e275959c08f85
                                     </td>
                                 </tr>
                             );

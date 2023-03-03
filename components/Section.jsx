@@ -17,7 +17,7 @@ const Section = () => {
 
     return (
         <div className="section w-100">
-            <div className="logo-box  w-100 text-center">
+            <div className="logo-box w-100 text-center">
                 <Link href="/">
                     <Image className="logo" src={Logo} alt="Hình ảnh logo" />
                 </Link>
@@ -32,7 +32,7 @@ const Section = () => {
                                         onClick={() => handleClick(index)}
                                         className="element-a-left"
                                         activeClassName="active"
-                                        href={item.href}
+                                        href={item.href != '#' ? item.href : ''}
                                     >
                                         <>
                                             <span>{item.icon}</span>
