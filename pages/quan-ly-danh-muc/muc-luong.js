@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 import Header from '@/components/Header';
-import LoaiHopDongComponent from '@/components/DanhMuc/LoaiHopDong/LoaiHopDong';
+import MucLuongComponent from '@/components/DanhMuc/MucLuong/MucLuong';
 
 const MucLuong = () => {
     return (
@@ -13,7 +13,7 @@ const MucLuong = () => {
             <div className="trang-quan-li-muc-luong">
                 <Header title="Quản lí mức lương" />
                 <div>
-                    <LoaiHopDongComponent />
+                    <MucLuongComponent />
                 </div>
             </div>
         </>

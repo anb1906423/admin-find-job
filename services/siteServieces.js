@@ -1,4 +1,11 @@
+import handleGetToken from '@/app/@func/HandleGetToken';
 import axios from '../pages/api/axios';
+
+const config = {
+    headers: {
+        Authorization: 'Bearer ' + handleGetToken(),
+    },
+};
 
 export const getAllAccountUngVien = () => {
     return axios.get('/ung-vien');
@@ -122,4 +129,40 @@ export const updateLoaiHopDong = (id, data) => {
 
 export const deleteLoaiHopDong = (id) => {
     return axios.delete(`/loai-hop-dong/${id}`);
+};
+
+export const getAllMucLuong = () => {
+    return axios.get(`/muc-luong`, config);
+};
+
+export const getAllNghanhNghe = () => {
+    return axios.get('/nganh-nghe');
+};
+
+export const createNewNghanhNghe = (data) => {
+    return axios.post('/nganh-nghe', data);
+};
+
+export const updateNghanhNghe = (id, data) => {
+    return axios.put(`/nganh-nghe/${id}`, data);
+};
+
+export const deleteNghanhNghe = (id) => {
+    return axios.delete(`/nganh-nghe/${id}`);
+};
+
+export const getAllQuyMo = () => {
+    return axios.get(`/qui-mo`);
+};
+
+export const createNewQuyMo = (data) => {
+    return axios.post(`/qui-mo`, data);
+};
+
+export const updateQuyMo = (id, data) => {
+    return axios.put(`/qui-mo/${id}`, data);
+};
+
+export const deleteQuyMo = (id) => {
+    return axios.delete(`/qui-mo/${id}`);
 };

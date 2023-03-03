@@ -7,11 +7,14 @@ import Loading from '@/app/@func/Loading/Loading';
 import SupperComponents from '@/app/components/SupperComponents/SupperComponents';
 import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitchButton';
 import {
-    createNewLoaiHopDong,
-    deleteLoaiHopDong,
-    getAllLoaiHopDong,
-    getAllMucLuong,
-    updateLoaiHopDong,
+    createNewNghanhNghe,
+    createNewQuyMo,
+    deleteNghanhNghe,
+    deleteQuyMo,
+    getAllNghanhNghe,
+    getAllQuyMo,
+    updateNghanhNghe,
+    updateQuyMo,
 } from '@/services';
 import { swalert } from '@/mixin/swal.mixin';
 import _ from 'lodash';
@@ -19,8 +22,8 @@ import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode
 
 const cx = classNames.bind(styles);
 
-const buttonArray = ['Tất cả mức lương', 'Tạo mới mức lương'];
-function MucLuongComponent(props) {
+const buttonArray = ['Tất cả quy mô', 'Tạo mới quy mô'];
+function QuyMoComponent(props) {
     const [indexClick, setIndexClick] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -34,7 +37,7 @@ function MucLuongComponent(props) {
         setIsLoading(true);
 
         try {
-            const Res = await getAllMucLuong();
+            const Res = await getAllQuyMo();
 
             const { data } = Res;
 
@@ -71,9 +74,7 @@ function MucLuongComponent(props) {
         setIsLoading(true);
 
         try {
-            typeAction === 'EDIT'
-                ? await updateLoaiHopDong(idAction, dataBuild)
-                : await createNewLoaiHopDong(dataBuild);
+            typeAction === 'EDIT' ? await updateQuyMo(idAction, dataBuild) : await createNewQuyMo(dataBuild);
             fetch();
             setTen('');
 
@@ -81,7 +82,7 @@ function MucLuongComponent(props) {
                 .fire({
                     title: 'Đã thực hiện thành công hành động!',
                     icon: 'warning',
-                    text: 'Bạn đã tạo mới thành công mực lương!',
+                    text: 'Bạn đã tạo thành công quy mô doanh nghiệp!',
                     showCloseButton: true,
                     showCancelButton: true,
                 })
@@ -123,7 +124,7 @@ function MucLuongComponent(props) {
                 })
                 .then(async (result) => {
                     if (result.isConfirmed) {
-                        await deleteLoaiHopDong(item.id);
+                        await deleteQuyMo(item.id);
                         fetch();
                     }
 
@@ -176,8 +177,8 @@ function MucLuongComponent(props) {
             {isLoading && <Loading />}
             <SupperSwitchButton onButtonClick={handleButtonClick} buttonArray={buttonArray} />
             <SupperComponents
-                titleAll="Tất cả mực lương"
-                titleAdd="Thêm mới mực lương"
+                titleAll="Tất cả quy mô doanh nghiệp"
+                titleAdd="Thêm mới quy mô doanh nghiệp"
                 data={data}
                 isAdd={indexClick === 1 ? false : true}
                 cx={cx}
@@ -205,19 +206,19 @@ function MucLuongComponent(props) {
                 )}
             >
                 <div className={cx('item')}>
-                    <label htmlFor="hoten">Loại hợp đồng</label>
+                    <label htmlFor="hoten">Quy mô doanh nghiệp</label>
                     <input
                         onChange={(e) => setTen(e.target.value)}
                         value={ten}
                         className="form-control"
                         id="hoten"
-                        placeholder="eg: 5 - 10 triệu ..."
+                        placeholder="eg: 1000 nhân viên...."
                         required
                     />
                 </div>
                 <div>
                     <button className="btn btn-success">
-                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'TThêm mức lương'}
+                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'Thêm quy mô'}
                     </button>
                 </div>
             </SupperComponents>
@@ -225,6 +226,6 @@ function MucLuongComponent(props) {
     );
 }
 
-MucLuongComponent.propTypes = {};
+QuyMoComponent.propTypes = {};
 
-export default MucLuongComponent;
+export default QuyMoComponent;

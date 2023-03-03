@@ -6,21 +6,15 @@ import styles from '../danhmuc.module.scss';
 import Loading from '@/app/@func/Loading/Loading';
 import SupperComponents from '@/app/components/SupperComponents/SupperComponents';
 import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitchButton';
-import {
-    createNewLoaiHopDong,
-    deleteLoaiHopDong,
-    getAllLoaiHopDong,
-    getAllMucLuong,
-    updateLoaiHopDong,
-} from '@/services';
+import { createNewNghanhNghe, deleteNghanhNghe, getAllNghanhNghe, updateNghanhNghe } from '@/services';
 import { swalert } from '@/mixin/swal.mixin';
 import _ from 'lodash';
 import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode';
 
 const cx = classNames.bind(styles);
 
-const buttonArray = ['Tất cả mức lương', 'Tạo mới mức lương'];
-function MucLuongComponent(props) {
+const buttonArray = ['Tất cả nghành nghề', 'Tạo mới nghành nghề'];
+function NghanhNgheComponent(props) {
     const [indexClick, setIndexClick] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -34,7 +28,7 @@ function MucLuongComponent(props) {
         setIsLoading(true);
 
         try {
-            const Res = await getAllMucLuong();
+            const Res = await getAllNghanhNghe();
 
             const { data } = Res;
 
@@ -71,9 +65,7 @@ function MucLuongComponent(props) {
         setIsLoading(true);
 
         try {
-            typeAction === 'EDIT'
-                ? await updateLoaiHopDong(idAction, dataBuild)
-                : await createNewLoaiHopDong(dataBuild);
+            typeAction === 'EDIT' ? await updateNghanhNghe(idAction, dataBuild) : await createNewNghanhNghe(dataBuild);
             fetch();
             setTen('');
 
@@ -81,7 +73,7 @@ function MucLuongComponent(props) {
                 .fire({
                     title: 'Đã thực hiện thành công hành động!',
                     icon: 'warning',
-                    text: 'Bạn đã tạo mới thành công mực lương!',
+                    text: 'Bạn đã tạo thành công nghành nghề!',
                     showCloseButton: true,
                     showCancelButton: true,
                 })
@@ -123,7 +115,7 @@ function MucLuongComponent(props) {
                 })
                 .then(async (result) => {
                     if (result.isConfirmed) {
-                        await deleteLoaiHopDong(item.id);
+                        await deleteNghanhNghe(item.id);
                         fetch();
                     }
 
@@ -176,8 +168,8 @@ function MucLuongComponent(props) {
             {isLoading && <Loading />}
             <SupperSwitchButton onButtonClick={handleButtonClick} buttonArray={buttonArray} />
             <SupperComponents
-                titleAll="Tất cả mực lương"
-                titleAdd="Thêm mới mực lương"
+                titleAll="Tất cả nghành nghề"
+                titleAdd="Thêm mới nghành nghề"
                 data={data}
                 isAdd={indexClick === 1 ? false : true}
                 cx={cx}
@@ -205,19 +197,19 @@ function MucLuongComponent(props) {
                 )}
             >
                 <div className={cx('item')}>
-                    <label htmlFor="hoten">Loại hợp đồng</label>
+                    <label htmlFor="hoten">Tên nghành nghề</label>
                     <input
                         onChange={(e) => setTen(e.target.value)}
                         value={ten}
                         className="form-control"
                         id="hoten"
-                        placeholder="eg: 5 - 10 triệu ..."
+                        placeholder="eg: Lao động tự do..."
                         required
                     />
                 </div>
                 <div>
                     <button className="btn btn-success">
-                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'TThêm mức lương'}
+                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'Thêm nghành nghề'}
                     </button>
                 </div>
             </SupperComponents>
@@ -225,6 +217,6 @@ function MucLuongComponent(props) {
     );
 }
 
-MucLuongComponent.propTypes = {};
+NghanhNgheComponent.propTypes = {};
 
-export default MucLuongComponent;
+export default NghanhNgheComponent;
