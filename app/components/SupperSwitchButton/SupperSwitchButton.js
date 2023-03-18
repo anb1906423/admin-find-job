@@ -23,7 +23,7 @@ function SupperSwitchButton({ buttonArray, onButtonClick }) {
                 return (
                     <button
                         key={index}
-                        className={`${activeButtonIndex === index ? 'btn btn-warning' : 'btn btn-primary'}`}
+                        className={`${activeButtonIndex === index ? 'btn btn-dark' : 'btn btn-outline-dark'}`}
                         onClick={() => handleClick(index)}
                     >
                         {title}

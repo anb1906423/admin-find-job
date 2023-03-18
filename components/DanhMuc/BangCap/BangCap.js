@@ -8,8 +8,9 @@ import Loading from '@/app/@func/Loading/Loading';
 import SupperComponents from '@/app/components/SupperComponents/SupperComponents';
 import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitchButton';
 import { createNewBangCap, deleteBangCap, getAllBangCap, updateBangCap } from '@/services';
-import { swalert } from '@/mixin/swal.mixin';
+import { swalert, swtoast } from '@/mixin/swal.mixin';
 import _ from 'lodash';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode';
 
 const cx = classNames.bind(styles);
@@ -79,23 +80,10 @@ function BangCapComponent(props) {
             setDonViDaoTao('');
             setXepLoai('');
 
-            swalert
-                .fire({
-                    title: 'Đã thực hiện thành công hành động!',
-                    icon: 'warning',
-                    text: 'Bạn đã tạo thành công bằng cấp',
-                    showCloseButton: true,
-                    showCancelButton: true,
-                })
-                .then(async (result) => {
-                    if (result.isConfirmed) {
-                        setIndexClick(1);
-                    }
-
-                    if (result.dismiss) {
-                        setIndexClick(1);
-                    }
-                });
+            swtoast.success({
+                text: 'Thông tin mới đã được cập nhật!',
+            })
+            setIndexClick(1);
         } catch (error) {
             console.log(error);
         }
@@ -119,9 +107,9 @@ function BangCapComponent(props) {
         } else {
             swalert
                 .fire({
-                    title: 'Bạn chắc chắn với hành động của mình?',
+                    title: 'Xóa bằng cấp?',
                     icon: 'warning',
-                    text: 'hành động xóa sẽ không thể khôi phục lại được !',
+                    text: 'Bạn chắc chắn xóa bằng cấp!',
                     showCloseButton: true,
                     showCancelButton: true,
                 })
@@ -138,16 +126,16 @@ function BangCapComponent(props) {
         }
     };
 
-    const handleRenderNode = ({ item, handlePerformActions = () => {}, index }) => {
+    const handleRenderNode = ({ item, handlePerformActions = () => { }, index }) => {
         return (
             <tbody>
                 {!_.isEmpty(item) && (
                     <tr>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.ten}</td>
-                        <td>{item.donViDaoTao}</td>
-                        <td>{item.xepLoai}</td>
-                        <td>
+                        <th className='align-middle text-center' scope="row">{index + 1}</th>
+                        <td className='align-middle text-center'>{item.ten}</td>
+                        <td className='align-middle text-center'>{item.donViDaoTao}</td>
+                        <td className='align-middle text-center'>{item.xepLoai}</td>
+                        <td className='align-middle text-center'>
                             <button
                                 onClick={() =>
                                     handlePerformActions({
@@ -157,7 +145,7 @@ function BangCapComponent(props) {
                                 }
                                 className="btn mx-1"
                             >
-                                <i className="bi bi-trash2"></i>
+                                <DeleteOutlined />
                             </button>
                             <button
                                 onClick={() =>
@@ -168,7 +156,7 @@ function BangCapComponent(props) {
                                 }
                                 className="btn mx-1"
                             >
-                                <i className="bi bi-menu-up"></i>
+                                <EditOutlined />
                             </button>
                         </td>
                     </tr>
@@ -197,7 +185,7 @@ function BangCapComponent(props) {
                         RenderChildren={handleRenderNode}
                     >
                         <thead className="table-dark">
-                            <tr>
+                            <tr className='text-center'>
                                 <th scope="col">#</th>
                                 <th scope="col">Tên</th>
                                 <th scope="col">{'Đơn vị đào tạo'}</th>
@@ -206,7 +194,8 @@ function BangCapComponent(props) {
                             </tr>
                         </thead>
                     </SupperRenderNode>
-                )}
+                )
+                }
             >
                 <div className={cx('item')}>
                     <label htmlFor="hoten">Tên bằng cấp của bạn</label>
@@ -226,7 +215,7 @@ function BangCapComponent(props) {
                         value={donViDaoTao}
                         className="form-control"
                         id="don-vi-dao-tao"
-                        placeholder="eg: Đại Học Cần Thơ"
+                        placeholder="eg: Đại học Cần Thơ"
                         required
                     />
                 </div>
@@ -237,17 +226,17 @@ function BangCapComponent(props) {
                         value={xepLoai}
                         className="form-control"
                         id="xep-loai"
-                        placeholder="eg: Giỏi, khá, trung bình, xuất sắc"
+                        placeholder="eg: Giỏi, Khá, Trung bình, Xuất sắc"
                         required
                     />
                 </div>
-                <div>
-                    <button className="btn btn-success">
-                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'Thêm mới bằng cấp'}
+                <div className='text-center'>
+                    <button className="btn btn-dark">
+                    Enter
                     </button>
                 </div>
-            </SupperComponents>
-        </div>
+            </SupperComponents >
+        </div >
     );
 }
 

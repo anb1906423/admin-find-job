@@ -135,6 +135,18 @@ export const getAllMucLuong = () => {
     return axios.get(`/muc-luong`, config);
 };
 
+export const createNewMucLuong = (data) => {
+    return axios.post(`/muc-luong`, data)
+}
+
+export const updateMucLuong = (id, data) => {
+    return axios.put(`/muc-luong/${id}`, data);
+};
+
+export const deleteMucLuong = (id) => {
+    return axios.delete(`/muc-luong/${id}`);
+};
+
 export const getAllNghanhNghe = () => {
     return axios.get('/nganh-nghe');
 };

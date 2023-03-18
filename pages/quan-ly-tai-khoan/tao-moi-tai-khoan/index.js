@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 
-import TaoMoiTaiKhoanAdmin from '@/components/ManageAccount/TaoTaiKhoanAdmin';
+// import TaoMoiTaiKhoanAdmin from '@/components/ManageAccount/TaoTaiKhoanAdmin';
 
 function index() {
     return (
@@ -9,7 +9,7 @@ function index() {
             <Head>
                 <title>Tạo thêm tài khoản admin cho website của bạn</title>
             </Head>
-            <TaoMoiTaiKhoanAdmin />
+            {/* <TaoMoiTaiKhoanAdmin /> */}
         </>
     );
 }

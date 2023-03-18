@@ -84,11 +84,11 @@ function TaiKhoanNhaTuyenDung() {
             <Heading title="Danh Sách Tài Khoản Nhà Tuyển Dụng" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
-                    <tr>
+                    <tr className='text-center'>
                         <th scope="col">#</th>
-                        <th scope="col">Tên nhà tuyển dụng</th>
+                        <th scope="col">Tên công ty</th>
                         <th scope="col">Email</th>
-                        <th scope="col">SDT</th>
+                        <th scope="col">SĐT</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Mã số thuế</th>
                         <th scope="col" className="text-center">
@@ -109,7 +109,7 @@ function TaiKhoanNhaTuyenDung() {
                                 //     render={() => PreviewAccount(item)}
                                 // >
                                 // </Tippy>
-                                <tr key={id} className={cx('item-account')}>
+                                <tr key={id} className={cx('item-account text-center')}>
                                     <td>{index + 1}</td>
                                     <td>{item.tenCty ? item.tenCty : 'None'}</td>
                                     <td>{item.email ? item.email : 'None'}</td>

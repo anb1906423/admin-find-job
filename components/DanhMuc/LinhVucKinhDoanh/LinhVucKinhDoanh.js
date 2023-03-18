@@ -13,8 +13,9 @@ import {
     getAllLinhVucKinhDoanh,
     updateLinhVucKinhDoanh,
 } from '@/services';
-import { swalert } from '@/mixin/swal.mixin';
+import { swalert, swtoast } from '@/mixin/swal.mixin';
 import _ from 'lodash';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode';
 
 const cx = classNames.bind(styles);
@@ -77,23 +78,10 @@ function LinhVucKinhDoanhComponent(props) {
             fetch();
             setTen('');
 
-            swalert
-                .fire({
-                    title: 'Đã thực hiện thành công hành động!',
-                    icon: 'warning',
-                    text: 'Bạn đã tạo thành công lĩnh vực kinh doanh',
-                    showCloseButton: true,
-                    showCancelButton: true,
-                })
-                .then(async (result) => {
-                    if (result.isConfirmed) {
-                        setIndexClick(1);
-                    }
-
-                    if (result.dismiss) {
-                        setIndexClick(1);
-                    }
-                });
+            swtoast.success({
+                text: 'Thông tin mới đã được cập nhật!',
+            })
+            setIndexClick(1);
         } catch (error) {
             console.log(error);
         }
@@ -115,9 +103,9 @@ function LinhVucKinhDoanhComponent(props) {
         } else {
             swalert
                 .fire({
-                    title: 'Bạn chắc chắn với hành động của mình?',
+                    title: 'Xóa lĩnh vực kinh doanh?',
                     icon: 'warning',
-                    text: 'hành động xóa sẽ không thể khôi phục lại được !',
+                    text: 'Bạn chắc chắn xóa lĩnh vực kinh doanh!',
                     showCloseButton: true,
                     showCancelButton: true,
                 })
@@ -139,9 +127,9 @@ function LinhVucKinhDoanhComponent(props) {
             <tbody>
                 {!_.isEmpty(item) && (
                     <tr>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.ten}</td>
-                        <td className="text-center">
+                        <th className='align-middle text-center' scope="row">{index + 1}</th>
+                        <td className='align-middle text-center'>{item.ten}</td>
+                        <td className="align-middle text-center">
                             <button
                                 onClick={() =>
                                     handlePerformActions({
@@ -151,7 +139,7 @@ function LinhVucKinhDoanhComponent(props) {
                                 }
                                 className="btn mx-1"
                             >
-                                <i className="bi bi-trash2"></i>
+                                <DeleteOutlined />
                             </button>
                             <button
                                 onClick={() =>
@@ -162,7 +150,7 @@ function LinhVucKinhDoanhComponent(props) {
                                 }
                                 className="btn mx-1"
                             >
-                                <i className="bi bi-menu-up"></i>
+                                <EditOutlined />
                             </button>
                         </td>
                     </tr>
@@ -191,7 +179,7 @@ function LinhVucKinhDoanhComponent(props) {
                         RenderChildren={handleRenderNode}
                     >
                         <thead className="table-dark">
-                            <tr>
+                            <tr className="text-center">
                                 <th scope="col">#</th>
                                 <th scope="col" class="col-9">
                                     Tên
@@ -215,9 +203,9 @@ function LinhVucKinhDoanhComponent(props) {
                         required
                     />
                 </div>
-                <div>
-                    <button className="btn btn-success">
-                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'Thêm mới lĩnh vực kinh doanh'}
+                <div className='text-center'>
+                    <button className="btn btn-dark">
+                        Enter
                     </button>
                 </div>
             </SupperComponents>

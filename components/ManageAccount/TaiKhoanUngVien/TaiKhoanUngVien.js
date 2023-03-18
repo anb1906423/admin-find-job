@@ -84,15 +84,15 @@ function TaiKhoanUngVien() {
             <Heading title="Danh Sách Tài Khoản Ứng Viên" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
-                    <tr className="">
+                    <tr className="text-center">
                         <th scope="col">#</th>
                         <th scope="col">Họ và tên</th>
                         <th scope="col">Email</th>
-                        <th scope="col">SDT</th>
+                        <th scope="col">SĐT</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Vị trí mong muốn</th>
                         <th scope="col" className="text-center">
-                            Hành động
+                            Trạng thái
                         </th>
                     </tr>
                 </thead>
@@ -109,7 +109,7 @@ function TaiKhoanUngVien() {
                                 //     render={() => PreviewAccount(item)}
                                 // >
                                 // </Tippy>
-                                <tr key={id} className={cx('item-account')}>
+                                <tr key={id} className={cx('item-account text-center')}>
                                     <td>{index + 1}</td>
                                     <td>{item.hoVaTen ? item.hoVaTen : 'None'}</td>
                                     <td>{item.email ? item.email : 'None'}</td>

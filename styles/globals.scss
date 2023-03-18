@@ -2,8 +2,7 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 @import 'tippy.js/dist/tippy.css';
 
-@import './Section.scss';
-@import './Header.scss';
+@import './SideBar.scss';
 
 * {
     margin    : 0;
@@ -27,7 +26,6 @@ html {
 }
 
 .layout {
-    height  : 100vh;
     position: relative;
 }
 

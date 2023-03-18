@@ -7,13 +7,13 @@ import Loading from '@/app/@func/Loading/Loading';
 import SupperComponents from '@/app/components/SupperComponents/SupperComponents';
 import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitchButton';
 import {
-    createNewLoaiHopDong,
-    deleteLoaiHopDong,
-    getAllLoaiHopDong,
+    createNewMucLuong,
+    deleteMucLuong,
     getAllMucLuong,
-    updateLoaiHopDong,
+    updateMucLuong,
 } from '@/services';
-import { swalert } from '@/mixin/swal.mixin';
+import { swalert, swtoast } from '@/mixin/swal.mixin';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import _ from 'lodash';
 import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode';
 
@@ -72,28 +72,15 @@ function MucLuongComponent(props) {
 
         try {
             typeAction === 'EDIT'
-                ? await updateLoaiHopDong(idAction, dataBuild)
-                : await createNewLoaiHopDong(dataBuild);
+                ? await updateMucLuong(idAction, dataBuild)
+                : await createNewMucLuong(dataBuild);
             fetch();
             setTen('');
 
-            swalert
-                .fire({
-                    title: 'Đã thực hiện thành công hành động!',
-                    icon: 'warning',
-                    text: 'Bạn đã tạo mới thành công mực lương!',
-                    showCloseButton: true,
-                    showCancelButton: true,
-                })
-                .then(async (result) => {
-                    if (result.isConfirmed) {
-                        setIndexClick(1);
-                    }
-
-                    if (result.dismiss) {
-                        setIndexClick(1);
-                    }
-                });
+            swtoast.success({
+                text: 'Thông tin mới đã được cập nhật!',
+            })
+            setIndexClick(1);
         } catch (error) {
             console.log(error);
         }
@@ -115,15 +102,15 @@ function MucLuongComponent(props) {
         } else {
             swalert
                 .fire({
-                    title: 'Bạn chắc chắn với hành động của mình?',
+                    title: 'Xóa mức lương?',
                     icon: 'warning',
-                    text: 'hành động xóa sẽ không thể khôi phục lại được !',
+                    text: 'Bạn chắc chắn xóa mức lương!',
                     showCloseButton: true,
                     showCancelButton: true,
                 })
                 .then(async (result) => {
                     if (result.isConfirmed) {
-                        await deleteLoaiHopDong(item.id);
+                        await deleteMucLuong(item.id);
                         fetch();
                     }
 
@@ -139,9 +126,9 @@ function MucLuongComponent(props) {
             <tbody>
                 {!_.isEmpty(item) && (
                     <tr>
-                        <th scope="row">{index + 1}</th>
-                        <td>{item.ten}</td>
-                        <td className="text-center">
+                        <th className='align-middle text-center' scope="row">{index + 1}</th>
+                        <td className='align-middle text-center'>{item.ten}</td>
+                        <td className='align-middle text-center'>
                             <button
                                 onClick={() =>
                                     handlePerformActions({
@@ -151,7 +138,7 @@ function MucLuongComponent(props) {
                                 }
                                 className="btn mx-1"
                             >
-                                <i className="bi bi-trash2"></i>
+                                <DeleteOutlined />
                             </button>
                             <button
                                 onClick={() =>
@@ -162,7 +149,7 @@ function MucLuongComponent(props) {
                                 }
                                 className="btn mx-1"
                             >
-                                <i className="bi bi-menu-up"></i>
+                                <EditOutlined />
                             </button>
                         </td>
                     </tr>
@@ -191,7 +178,7 @@ function MucLuongComponent(props) {
                         RenderChildren={handleRenderNode}
                     >
                         <thead className="table-dark">
-                            <tr>
+                            <tr className='text-center'>
                                 <th scope="col">#</th>
                                 <th scope="col" class="col-9">
                                     Tên
@@ -205,7 +192,7 @@ function MucLuongComponent(props) {
                 )}
             >
                 <div className={cx('item')}>
-                    <label htmlFor="hoten">Loại hợp đồng</label>
+                    <label htmlFor="hoten">Mức lương</label>
                     <input
                         onChange={(e) => setTen(e.target.value)}
                         value={ten}
@@ -215,9 +202,9 @@ function MucLuongComponent(props) {
                         required
                     />
                 </div>
-                <div>
-                    <button className="btn btn-success">
-                        {typeAction === 'EDIT' ? 'Thực hiện chỉnh sửa' : 'TThêm mức lương'}
+                <div className='text-center'>
+                    <button className="btn btn-dark">
+                        Enter
                     </button>
                 </div>
             </SupperComponents>
