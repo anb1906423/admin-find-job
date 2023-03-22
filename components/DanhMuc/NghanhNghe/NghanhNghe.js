@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -24,6 +24,9 @@ function NghanhNgheComponent(props) {
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
+    const [err, setErr] = useState('');
+
+    const tenRef = useRef()
 
     const fetch = async () => {
         setIsLoading(true);
@@ -57,7 +60,11 @@ function NghanhNgheComponent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten) return;
+        if (!ten) {
+            tenRef.current.focus()
+            setErr("Vui lòng nhập ngành nghề!")
+            return;
+        }
 
         const dataBuild = {
             ten,
@@ -73,10 +80,13 @@ function NghanhNgheComponent(props) {
             swtoast.success({
                 text: 'Thông tin mới đã được cập nhật!',
             })
-            setIndexClick(1);
 
+            // Chuyển vè trang tất cả
+            setIndexClick(1);
+            setErr('')
         } catch (error) {
             console.log(error);
+            setErr(error.response.data.message)
         }
 
         setIsLoading(false);
@@ -115,7 +125,7 @@ function NghanhNgheComponent(props) {
         }
     };
 
-    const handleRenderNode = ({ item, handlePerformActions = () => {}, index }) => {
+    const handleRenderNode = ({ item, handlePerformActions = () => { }, index }) => {
         return (
             <tbody>
                 {!_.isEmpty(item) && (
@@ -132,7 +142,7 @@ function NghanhNgheComponent(props) {
                                 }
                                 className="btn mx-1"
                             >
-                                 <DeleteOutlined />
+                                <DeleteOutlined />
                             </button>
                             <button
                                 onClick={() =>
@@ -193,8 +203,11 @@ function NghanhNgheComponent(props) {
                         className="form-control"
                         id="hoten"
                         placeholder="eg: Lao động tự do..."
-                        required
+                        ref={tenRef}
                     />
+                    <p style={{ margin: "0", paddingTop: '4px' }} className="text-danger">
+                        {err}
+                    </p>
                 </div>
                 <div className="text-center">
                     <button className="btn btn-dark">

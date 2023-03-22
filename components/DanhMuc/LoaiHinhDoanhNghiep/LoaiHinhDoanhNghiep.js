@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { v4 as uuidv4 } from 'uuid';
@@ -30,6 +30,9 @@ function LoaiHinhDoanhNghiepComponent(props) {
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
+    const [err, setErr] = useState('');
+
+    const tenRef = useRef()
 
     const fetch = async () => {
         setIsLoading(true);
@@ -63,7 +66,11 @@ function LoaiHinhDoanhNghiepComponent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten) return;
+        if (!ten) {
+            tenRef.current.focus()
+            setErr("Vui lòng nhập loại hình doanh nghiệp!")
+            return;
+        }
 
         const dataBuild = {
             ten,
@@ -82,7 +89,10 @@ function LoaiHinhDoanhNghiepComponent(props) {
                 text: 'Thông tin mới đã được cập nhật!',
             })
             setIndexClick(1);
+            setErr('')
+
         } catch (error) {
+            setErr(error.response.data.message)
             console.log(error);
         }
 
@@ -199,9 +209,12 @@ function LoaiHinhDoanhNghiepComponent(props) {
                         value={ten}
                         className="form-control"
                         id="hoten"
-                        placeholder="eg: công ty cổ phần, công ty trách nhiệm hữu hạn một thành viên..."
-                        required
+                        placeholder="eg: Công ty cổ phần, Công ty TNHH..."
+                        ref={tenRef}
                     />
+                    <p style={{ margin: "0", paddingTop: '4px' }} className="text-danger">
+                        {err}
+                    </p>
                 </div>
                 <div className="text-center">
                     <button className="btn btn-dark">

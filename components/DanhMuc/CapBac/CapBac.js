@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,6 +25,9 @@ function CapBacComponent(props) {
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
+    const [err, setErr] = useState('');
+
+    const tenRef = useRef()
 
     const fetch = async () => {
         setIsLoading(true);
@@ -58,7 +61,11 @@ function CapBacComponent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten) return;
+        if (!ten) {
+            tenRef.current.focus()
+            setErr("Vui lòng nhập cấp bậc!")
+            return;
+        }
 
         const dataBuild = {
             ten,
@@ -67,7 +74,7 @@ function CapBacComponent(props) {
         setIsLoading(true);
 
         try {
-            typeAction === 'EDIT' ? await updateCapBac(idAction, dataBuild) : await createNewCapBac(dataBuild);
+            const result = typeAction === 'EDIT' ? await updateCapBac(idAction, dataBuild) : await createNewCapBac(dataBuild);
             fetch();
             setTen('');
 
@@ -75,7 +82,9 @@ function CapBacComponent(props) {
                 text: 'Thông tin mới đã được cập nhật!',
             })
             setIndexClick(1);
+            setErr('')
         } catch (error) {
+            setErr(error.response.data.message)
             console.log(error);
         }
 
@@ -115,7 +124,7 @@ function CapBacComponent(props) {
         }
     };
 
-    const handleRenderNode = ({ item, handlePerformActions = () => {}, index }) => {
+    const handleRenderNode = ({ item, handlePerformActions = () => { }, index }) => {
         return (
             <tbody>
                 {!_.isEmpty(item) && (
@@ -157,8 +166,8 @@ function CapBacComponent(props) {
             {isLoading && <Loading />}
             <SupperSwitchButton onButtonClick={handleButtonClick} buttonArray={buttonArray} />
             <SupperComponents
-                titleAll="Tất cả cấp bậc của bạn"
-                titleAdd="Thêm mới cấp bậc"
+                titleAll="Tất cả cấp bậc"
+                titleAdd="Thông tin cấp bậc"
                 data={data}
                 isAdd={indexClick === 1 ? false : true}
                 cx={cx}
@@ -174,10 +183,10 @@ function CapBacComponent(props) {
                         <thead className="table-dark">
                             <tr className="text-center">
                                 <th scope="col">#</th>
-                                <th scope="col" class="col-9">
+                                <th scope="col" className="col-9">
                                     Tên
                                 </th>
-                                <th scope="col" class="col-2 text-center">
+                                <th scope="col" className="col-2 text-center">
                                     Hành động
                                 </th>
                             </tr>
@@ -193,8 +202,11 @@ function CapBacComponent(props) {
                         className="form-control"
                         id="hoten"
                         placeholder="eg: Nhân viên, Chuyên gia, Quản lý cấp cao, Lao động phổ thông"
-                        required
+                        ref={tenRef}
                     />
+                    <p style={{ margin: "0", paddingTop: '4px' }} className="text-danger">
+                        {err}
+                    </p>
                 </div>
                 <div className='text-center'>
                     <button className="btn btn-dark">

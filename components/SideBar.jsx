@@ -41,7 +41,7 @@ const HeaderComponent = ({ children }) => {
 
     useEffect(() => {
         if (!isLoggedIn) {
-            Router.push('/login')
+            Router.push('/dang-nhap')
         }
     }, [isLoggedIn])
 
@@ -51,7 +51,7 @@ const HeaderComponent = ({ children }) => {
     return (
         <>
             {
-                params.pathname === '/login' ? children : isLoggedIn && (
+                params.pathname === '/dang-nhap' ? children : isLoggedIn && (
 
                     <Layout>
                         <Header className="header d-flex justify-content-between">

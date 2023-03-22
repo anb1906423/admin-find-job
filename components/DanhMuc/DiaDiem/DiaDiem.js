@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,6 +25,9 @@ function DiaDiemLamViecComponent(props) {
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
+    const [err, setErr] = useState('');
+
+    const tenRef = useRef()
 
     const fetch = async () => {
         setIsLoading(true);
@@ -58,7 +61,11 @@ function DiaDiemLamViecComponent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten) return;
+        if (!ten) {
+            tenRef.current.focus()
+            setErr("Vui lòng nhập địa điểm làm việc!")
+            return;
+        }
 
         const dataBuild = {
             ten,
@@ -77,8 +84,10 @@ function DiaDiemLamViecComponent(props) {
                 text: 'Thông tin mới đã được cập nhật!',
             })
             setIndexClick(1);
+            setErr('')
         } catch (error) {
             console.log(error);
+            setErr(error.response.data.message)
         }
 
         setIsLoading(false);
@@ -195,8 +204,11 @@ function DiaDiemLamViecComponent(props) {
                         className="form-control"
                         id="hoten"
                         placeholder="eg: Phú Thọ, Hà Nội, TP Hồ Chí Minh..."
-                        required
+                        ref={tenRef}
                     />
+                    <p style={{ margin: "0", paddingTop: '4px' }} className="text-danger">
+                        {err}
+                    </p>
                 </div>
                 <div className='text-center'>
                     <button className="btn btn-dark">

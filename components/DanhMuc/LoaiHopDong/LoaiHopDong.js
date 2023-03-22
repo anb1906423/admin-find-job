@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,6 +25,9 @@ function LoaiHopDongComponent(props) {
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
+    const [err, setErr] = useState('');
+
+    const tenRef = useRef()
 
     const fetch = async () => {
         setIsLoading(true);
@@ -58,7 +61,11 @@ function LoaiHopDongComponent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten) return;
+        if (!ten) {
+            tenRef.current.focus()
+            setErr("Vui lòng nhập loại hợp đồng!")
+            return;
+        }
 
         const dataBuild = {
             ten,
@@ -68,7 +75,7 @@ function LoaiHopDongComponent(props) {
 
         try {
             typeAction === 'EDIT'
-                ? await updateLoaiHopDongs(idAction, dataBuild)
+                ? await updateLoaiHopDong(idAction, dataBuild)
                 : await createNewLoaiHopDong(dataBuild);
             fetch();
             setTen('');
@@ -77,8 +84,11 @@ function LoaiHopDongComponent(props) {
                 text: 'Thông tin mới đã được cập nhật!',
             })
             setIndexClick(1);
+            setErr('')
         } catch (error) {
+            // setErr("Loại hợp đồng đã tồn tại!")
             console.log(error);
+            setErr(error.response.data.message)
         }
 
         setIsLoading(false);
@@ -176,10 +186,10 @@ function LoaiHopDongComponent(props) {
                         <thead className="table-dark">
                             <tr className="text-center">
                                 <th scope="col">#</th>
-                                <th scope="col" class="col-9">
+                                <th scope="col" className="col-9">
                                     Tên
                                 </th>
-                                <th scope="col" class="col-2 text-center">
+                                <th scope="col" className="col-2 text-center">
                                     Hành động
                                 </th>
                             </tr>
@@ -195,8 +205,11 @@ function LoaiHopDongComponent(props) {
                         className="form-control"
                         id="hoten"
                         placeholder="eg: Hợp đồng lao động, ..."
-                        required
+                        ref={tenRef}
                     />
+                    <p style={{ margin: "0", paddingTop: '4px' }} className="text-danger">
+                        {err}
+                    </p>
                 </div>
                 <div className='text-center'>
                     <button className="btn btn-dark">

@@ -7,17 +7,18 @@ function SupperComponents({
     titleAdd = '',
     isAdd = false,
     data,
-    cx = () => {},
+    cx = () => { },
     children,
-    handleSubmit = () => {},
-    handlePerformAction = () => {},
-    RenderNode = () => {},
+    handleSubmit = () => { },
+    handlePerformAction = () => { },
+    RenderNode = () => { },
 }) {
     return (
         <div className={cx('content')}>
             {isAdd ? (
-                <div className={cx('content-item pt-4')}>
-                    <h3 className="text-center pb-3">{titleAdd}</h3>
+                <div className={cx('content-item pt-2')}>
+                    <h3
+                        className="text-center pb-2 text-uppercase fs-5">{titleAdd}</h3>
                     <div className={cx('content-body-render')}>
                         <div className={cx('wp-form')}>
                             <form onSubmit={handleSubmit}>{children}</form>
@@ -25,8 +26,8 @@ function SupperComponents({
                     </div>
                 </div>
             ) : (
-                <div className={cx('content-item pt-4')}>
-                    <h3 className="text-center pb-3">{titleAll}</h3>
+                <div className={cx('content-item pt-2')}>
+                    <h3 className="text-center pb-2 text-uppercase fs-5">{titleAll}</h3>
                     <div className={cx('content-body-render')}>
                         <RenderNode handlePerformAction={handlePerformAction} data={data} />
                     </div>

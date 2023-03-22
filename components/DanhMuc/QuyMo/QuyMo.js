@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -29,6 +29,10 @@ function QuyMoComponent(props) {
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
+
+    const [err, setErr] = useState('');
+
+    const tenRef = useRef()
 
     const fetch = async () => {
         setIsLoading(true);
@@ -62,7 +66,11 @@ function QuyMoComponent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten) return;
+        if (!ten) {
+            tenRef.current.focus()
+            setErr("Vui lòng nhập quy mô công ty!")
+            return;
+        }
 
         const dataBuild = {
             ten,
@@ -78,8 +86,10 @@ function QuyMoComponent(props) {
             swtoast.success({
                 text: 'Thông tin mới đã được cập nhật!',
             })
+            setErr('')
             setIndexClick(1);
         } catch (error) {
+            setErr(error.response.data.message)
             console.log(error);
         }
 
@@ -196,9 +206,12 @@ function QuyMoComponent(props) {
                         value={ten}
                         className="form-control"
                         id="hoten"
-                        placeholder="eg: 1000 nhân viên...."
-                        required
+                        placeholder="eg: 20 - 30 Nhân viên"
+                        ref={tenRef}
                     />
+                    <p style={{ margin: "0", paddingTop: '4px' }} className="text-danger">
+                        {err}
+                    </p>
                 </div>
                 <div className="text-center">
                     <button className="btn btn-dark">

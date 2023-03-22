@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { v4 as uuidv4 } from 'uuid';
@@ -30,6 +30,9 @@ function KinhNghiemComponent(props) {
     const [typeAction, setTypeAction] = useState('');
 
     const [ten, setTen] = useState('');
+    const [err, setErr] = useState('');
+
+    const tenRef = useRef()
 
     const fetch = async () => {
         setIsLoading(true);
@@ -63,7 +66,11 @@ function KinhNghiemComponent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!ten) return;
+        if (!ten) {
+            tenRef.current.focus()
+            setErr("Vui lòng nhập kinh nghiệm làm việc!")
+            return;
+        }
 
         const dataBuild = {
             ten,
@@ -82,8 +89,10 @@ function KinhNghiemComponent(props) {
                 text: 'Thông tin mới đã được cập nhật!',
             })
             setIndexClick(1);
+            setErr('')
         } catch (error) {
             console.log(error);
+            setErr(error.response.data.message)
         }
 
         setIsLoading(false);
@@ -200,8 +209,11 @@ function KinhNghiemComponent(props) {
                         className="form-control"
                         id="hoten"
                         placeholder="eg: 1 năm kinh nghiệm, 2 năm kinh nghiệm...."
-                        required
+                        ref={tenRef}
                     />
+                    <p style={{ margin: "0", paddingTop: '4px' }} className="text-danger">
+                        {err}
+                    </p>
                 </div>
                 <div className='text-center'>
                     <button className="btn btn-dark">
