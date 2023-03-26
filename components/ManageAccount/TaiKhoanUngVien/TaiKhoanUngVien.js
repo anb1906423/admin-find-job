@@ -15,12 +15,15 @@ import Loading from '@/app/@func/Loading';
 import PreViewAccount from '@/app/components/PreViewAccount/PreViewAccount';
 import Wrapper from '@/app/components/Popper/Wrapper';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { backendAPI } from '../../../config';
 import { swalert, swtoast } from '@/mixin/swal.mixin';
 
 const cx = classNames.bind(styles);
+const url = '/quan-ly-tai-khoan/ung-vien'
 
 function TaiKhoanUngVien() {
+    const router = useRouter()
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
@@ -84,7 +87,7 @@ function TaiKhoanUngVien() {
             <Heading title="Danh Sách Tài Khoản Ứng Viên" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
-                    <tr className="text-center">
+                    <tr className="">
                         <th scope="col">#</th>
                         <th scope="col">Họ và tên</th>
                         <th scope="col">Email</th>
@@ -109,8 +112,10 @@ function TaiKhoanUngVien() {
                                 //     render={() => PreviewAccount(item)}
                                 // >
                                 // </Tippy>
-                                <tr key={id} className={cx('item-account text-center')}>
-                                    <td>{index + 1}</td>
+                                <tr key={id} className={cx('item-account')}>
+                                    <td className='position-relative'>
+                                        {index + 1}
+                                    </td>
                                     <td>{item.hoVaTen ? item.hoVaTen : 'None'}</td>
                                     <td>{item.email ? item.email : 'None'}</td>
                                     <td>{item.soDienThoai ? item.soDienThoai : 'None'}</td>
@@ -120,9 +125,12 @@ function TaiKhoanUngVien() {
                                         <Switch
                                             size="small"
                                             defaultChecked={item.state}
-                                            onChange={() => handleUpdateState(item, item.id)}
+                                            onChange={() => {
+                                                handleUpdateState(item, item.id)
+                                            }}
                                             disabled={disabledInputState}
                                         />
+                                        <span onClick={() => router.push(url + `/${item.id}`)} style={{ cursor: 'pointer', marginTop: "4px" }} className="d-block text-primary">Chi tiết</span>
                                     </td>
                                 </tr>
                             );

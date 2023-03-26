@@ -1,5 +1,5 @@
 .tai-khoan-ung-vien-wp {
-    height : 40000px;
+    height: 40000px;
 }
 
 .header {
@@ -57,9 +57,9 @@
 
 
 .item-account {
+    cursor: pointer;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.1);
-        cursor          : pointer;
     }
 }

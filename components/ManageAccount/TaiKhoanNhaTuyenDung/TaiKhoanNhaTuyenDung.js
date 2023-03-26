@@ -14,12 +14,15 @@ import Loading from '@/app/@func/Loading';
 import PreViewAccount from '@/app/components/PreViewAccount/PreViewAccount';
 import Wrapper from '@/app/components/Popper/Wrapper';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { backendAPI } from '../../../config';
 import { swalert, swtoast } from '@/mixin/swal.mixin';
 
 const cx = classNames.bind(styles);
+const url = '/quan-ly-tai-khoan/nha-tuyen-dung'
 
 function TaiKhoanNhaTuyenDung() {
+    const router = useRouter()
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
@@ -84,7 +87,7 @@ function TaiKhoanNhaTuyenDung() {
             <Heading title="Danh Sách Tài Khoản Nhà Tuyển Dụng" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
-                    <tr className='text-center'>
+                    <tr className=''>
                         <th scope="col">#</th>
                         <th scope="col">Tên công ty</th>
                         <th scope="col">Email</th>
@@ -109,7 +112,7 @@ function TaiKhoanNhaTuyenDung() {
                                 //     render={() => PreviewAccount(item)}
                                 // >
                                 // </Tippy>
-                                <tr key={id} className={cx('item-account text-center')}>
+                                <tr key={id} className={cx('item-account')}>
                                     <td>{index + 1}</td>
                                     <td>{item.tenCty ? item.tenCty : 'None'}</td>
                                     <td>{item.email ? item.email : 'None'}</td>
@@ -123,6 +126,7 @@ function TaiKhoanNhaTuyenDung() {
                                             onChange={() => handleUpdateState(item, item.id)}
                                             disabled={disabledInputState}
                                         />
+                                        <span onClick={() => router.push(url + `/${item.id}`)} style={{ cursor: 'pointer', marginTop: "4px" }} className="d-block text-primary">Chi tiết</span>
                                     </td>
                                 </tr>
                             );

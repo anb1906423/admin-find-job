@@ -112,6 +112,7 @@ const HeaderComponent = ({ children }) => {
                             <Layout
                                 style={{
                                     padding: '0 24px 24px',
+                                    minHeight: "100vh"
                                 }}
                             >
                                 <Content
