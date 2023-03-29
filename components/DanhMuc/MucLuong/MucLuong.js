@@ -6,13 +6,7 @@ import styles from '../danhmuc.module.scss';
 import Loading from '@/app/@func/Loading/Loading';
 import SupperComponents from '@/app/components/SupperComponents/SupperComponents';
 import SupperSwitchButton from '@/app/components/SupperSwitchButton/SupperSwitchButton';
-import {
-    createNewLoaiHopDong,
-    deleteLoaiHopDong,
-    getAllLoaiHopDong,
-    getAllMucLuong,
-    updateLoaiHopDong,
-} from '@/services';
+import { createNewMucLuong, deleteMucLuong, getAllMucLuong, updateMucLuong } from '@/services';
 import { swalert } from '@/mixin/swal.mixin';
 import _ from 'lodash';
 import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode';
@@ -71,9 +65,7 @@ function MucLuongComponent(props) {
         setIsLoading(true);
 
         try {
-            typeAction === 'EDIT'
-                ? await updateLoaiHopDong(idAction, dataBuild)
-                : await createNewLoaiHopDong(dataBuild);
+            typeAction === 'EDIT' ? await updateMucLuong(idAction, dataBuild) : await createNewMucLuong(dataBuild);
             fetch();
             setTen('');
 
@@ -123,7 +115,7 @@ function MucLuongComponent(props) {
                 })
                 .then(async (result) => {
                     if (result.isConfirmed) {
-                        await deleteLoaiHopDong(item.id);
+                        await deleteMucLuong(item.id);
                         fetch();
                     }
 

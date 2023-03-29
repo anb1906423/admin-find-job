@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { v4 as uuidv4 } from 'uuid';
 
 import styles from '../danhmuc.module.scss';
 import Loading from '@/app/@func/Loading/Loading';
@@ -144,10 +143,10 @@ function BangCapComponent(props) {
                 {!_.isEmpty(item) && (
                     <tr>
                         <th scope="row">{index + 1}</th>
-                        <td>{item.ten}</td>
-                        <td>{item.donViDaoTao}</td>
-                        <td>{item.xepLoai}</td>
-                        <td>
+                        <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{item.ten}</td>
+                        <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{item.donViDaoTao}</td>
+                        <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>{item.xepLoai}</td>
+                        <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
                             <button
                                 onClick={() =>
                                     handlePerformActions({
