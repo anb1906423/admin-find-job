@@ -4,18 +4,12 @@ import { useRouter } from 'next/router';
 import Loading from '@/app/@func/Loading/Loading';
 import InfoItem from '@/components/InfoItem';
 import {
-    ChromeFilled,
     CreditCardFilled,
-    HeartOutlined,
     PhoneFilled,
-    ReconciliationFilled,
-    RocketOutlined,
     SlidersFilled,
     TeamOutlined,
-    UserDeleteOutlined,
-    UserOutlined,
 } from '@ant-design/icons';
-import { FaLocationArrow } from 'react-icons/fa';
+import { FaLocationArrow, FaBirthdayCake, FaHandHoldingHeart, FaTransgender, FaMailBulk, FaSearchLocation } from 'react-icons/fa';
 import { Image, Switch } from 'antd';
 import RenderArray from '@/app/@func/RenderArray/RenderArray';
 import { swtoast } from '@/mixin/swal.mixin';
@@ -106,95 +100,121 @@ const ThongTinChiTietUngVien = () => {
                             <div className="banner-box position-relative">
                                 <Image
                                     width={'100%'}
-                                    height={'440px'}
+                                    height={'120px'}
                                     style={{
                                         objectFit: 'cover',
                                     }}
+                                    preview={false}
                                     className="banner-cty"
                                     src={
-                                        ungVien.avatar ||
-                                        'https://t4.ftcdn.net/jpg/04/95/28/65/240_F_495286577_rpsT2Shmr6g81hOhGXALhxWOfx1vOQBa.jpg'
+                                        'https://images.unsplash.com/photo-1588421357574-87938a86fa28?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=60'
                                     }
                                 />
-                                <div className="logo-box position-absolute">
-                                    <Image
-                                        width={'140px'}
-                                        height={'140px'}
-                                        className="logo-cty"
-                                        src={
-                                            ungVien.avatar ||
-                                            'https://t4.ftcdn.net/jpg/04/95/28/65/240_F_495286577_rpsT2Shmr6g81hOhGXALhxWOfx1vOQBa.jpg'
-                                        }
-                                    />
+                                <div style={{
+                                    bottom: "-70px",
+                                    left: "13%",
+                                    transform: "translateX(-50%)",
+                                    borderRadius: "50%"
+                                }} className="logo-box-uv position-absolute">
+                                    <div className="position-rea">
+                                        <Image
+                                            width={'140px'}
+                                            height={'140px'}
+                                            className="logo-cty"
+                                            src={
+                                                ungVien.avatar ||
+                                                'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_960_720.png'
+                                            }
+                                        />
+                                        <h4 className="ten-uv text-light text-uppercase fs-5 position-absolute">{ungVien.hoVaTen}</h4>
+                                    </div>
                                 </div>
                             </div>
-                            <h4 className="ten-cty text-center text-uppercase fs-5">{ungVien.hoVaTen}</h4>
-                            <div className="gioi-thieu-box">
-                                <div>
-                                    <p className="fw-bold">Giới thiệu về ứng viên</p>
-                                    <p>{ungVien.gioiThieu || 'Đang cập nhật'}</p>
+                            <div className="main-info">
+                                <div className="row">
+                                    <div className="col-4">
+                                        <div className="main-info-item d-flex justify-content-start align-items-center position-relative">
+                                            <FaBirthdayCake />
+                                            <p style={{ margin: '0', paddingLeft: '8px' }}>{converTime(ungVien.sinhNhat)}</p>
+                                        </div>
+                                        <div className="main-info-item d-flex justify-content-start align-items-center position-relative">
+                                            <PhoneFilled />
+                                            <p style={{ margin: '0', paddingLeft: '8px' }}>{ungVien.soDienThoai}</p>
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <div className="main-info-item d-flex justify-content-start align-items-center position-relative">
+                                            <FaTransgender />
+                                            <p style={{ margin: '0', paddingLeft: '8px' }}>
+                                                {
+                                                    ungVien.isMale == true ? "Nam" : "Nữ"
+                                                }
+                                            </p>
+                                        </div>
+                                        <div className="main-info-item d-flex justify-content-start align-items-center position-relative">
+                                            <FaHandHoldingHeart />
+                                            <p style={{ margin: '0', paddingLeft: '8px' }}>
+                                                {
+                                                    ungVien.docThan == true ? "Độc thân" : "Đã kết hôn"
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <div className="main-info-item d-flex justify-content-start align-items-center position-relative">
+                                            <FaLocationArrow />
+                                            <p style={{ margin: '0', paddingLeft: '8px' }}>{ungVien.diaChi}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="my-4">
-                                <div>
-                                    <p className="fw-bold">Mục tiêu nghề nghiệp </p>
-                                    <p>{ungVien.mucTieuNgheNghiep || 'Đang cập nhật'}</p>
+                            <div className="gioi-thieu-box position-relative">
+                                <div className="row">
+                                    <div className="col-6">
+                                        <p style={{ margin: "0" }}>
+                                            <strong>Vị trí mong muốn: </strong>
+                                            {ungVien.viTriMongMuon}
+                                        </p>
+                                    </div>
+                                    <div className="col-6">
+                                        <p style={{ margin: "0" }}>
+                                            <strong>Mức lương mong muốn: </strong>
+                                            {ungVien.mucLuongMongMuon}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className='my-2'>
+                                    <div>
+                                        <p className="fw-bold">Giới thiệu về ứng viên</p>
+                                        <p className='detail'>{ungVien.gioiThieu || 'Đang cập nhật'}</p>
+                                    </div>
+                                </div>
+                                <div className="my-2">
+                                    <div>
+                                        <p className="fw-bold">Mục tiêu nghề nghiệp </p>
+                                        <p className='detail'>{ungVien.mucTieuNgheNghiep || 'Đang cập nhật'}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div className="col-3">
                             <div className="heading-in-profile text-uppercase fw-bold">Thông tin ứng viên</div>
                             <div className="info-box">
-                                <InfoItem icon={<UserOutlined />} info={ungVien.email} />
-                                <InfoItem icon={<PhoneFilled />} info={ungVien.soDienThoai} />
-                                <InfoItem icon={<FaLocationArrow />} info={ungVien.diaChi} />
-                                <InfoItem icon={<RocketOutlined />} info={converTime(ungVien.sinhNhat)} />
-                                <InfoItem
-                                    icon={<UserDeleteOutlined />}
-                                    info={
-                                        ungVien.isMale === true || ungVien.isMale === false
-                                            ? ungVien.isMale
-                                                ? 'Nam'
-                                                : 'Nữ'
-                                            : 'chưa cập nhật'
-                                    }
-                                />
-                                <InfoItem
-                                    icon={<HeartOutlined />}
-                                    info={
-                                        ungVien.docThan === true || ungVien.docThan === false
-                                            ? ungVien.docThan
-                                                ? 'độc thân'
-                                                : 'không độc thân hoặc không muốn tiếp lộ'
-                                            : 'chưa cập nhật'
-                                    }
-                                />
+                                <InfoItem icon={<FaMailBulk />} info={ungVien.email} />
                                 <InfoItem
                                     icon={<TeamOutlined />}
                                     info={'Kinh nghiệm: ' + (ungVien.kinhNghiem || 'Chưa cập nhật')}
                                 />
                                 <InfoItem
                                     icon={<CreditCardFilled />}
-                                    info={'Cấp bậc: ' + ungVien.capBac ? ungVien.capBac : 'Đang cập nhật'}
-                                />
-                                <InfoItem
-                                    icon={<SlidersFilled />}
-                                    info={'Vị trí mong muốn: ' + (ungVien.viTriMongMuon || 'Chưa cập nhật')}
-                                />
-                                <InfoItem
-                                    icon={<SlidersFilled />}
-                                    info={'Mức lương mong muốn: ' + (ungVien.mucLuongMongMuon || 'Chưa cập nhật')}
+                                    info={'Cấp bậc: ' + ungVien.capBac || 'Đang cập nhật'}
                                 />
                                 <InfoItem
                                     icon={<SlidersFilled />}
                                     info={'Học vấn: ' + (ungVien.hocVan || 'Chưa cập nhật')}
                                 />
                                 <InfoItem
-                                    icon={<ReconciliationFilled />}
-                                    info={'Lĩnh vực: ' + (ungVien.linhVucNgheNghiep || 'Chưa cập nhật')}
-                                />
-                                <InfoItem
-                                    icon={<ReconciliationFilled />}
+                                    icon={<FaSearchLocation />}
                                     info={
                                         'Địa điểm muốn làm việc: ' + (ungVien.diaDiemMongMuonLamViec || 'Chưa cập nhật')
                                     }

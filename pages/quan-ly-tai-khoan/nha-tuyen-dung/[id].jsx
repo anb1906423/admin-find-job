@@ -102,7 +102,7 @@ const ThongTinChiTietNhaTuyenDung = () => {
                     <div className="banner-box position-relative">
                         <Image
                             width={'100%'}
-                            height={'440px'}
+                            height={'300px'}
                             style={{
                                 objectFit: 'cover',
                             }}
