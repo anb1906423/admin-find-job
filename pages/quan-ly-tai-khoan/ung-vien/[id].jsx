@@ -173,7 +173,7 @@ const ThongTinChiTietUngVien = () => {
                                     <div className="col-6">
                                         <p style={{ margin: "0" }}>
                                             <strong>Vị trí mong muốn: </strong>
-                                            {ungVien.viTriMongMuon}
+                                            {ungVien.viTriMongMuon || 'Đang cập nhật'}
                                         </p>
                                     </div>
                                     <div className="col-6">
@@ -186,13 +186,13 @@ const ThongTinChiTietUngVien = () => {
                                 <div className='my-2'>
                                     <div>
                                         <p className="fw-bold">Giới thiệu về ứng viên</p>
-                                        <p className='detail'>{ungVien.gioiThieu || 'Đang cập nhật'}</p>
+                                        <p style={{ whiteSpace: "pre-line" }} className='detail'>{ungVien.gioiThieu || 'Đang cập nhật'}</p>
                                     </div>
                                 </div>
                                 <div className="my-2">
                                     <div>
                                         <p className="fw-bold">Mục tiêu nghề nghiệp </p>
-                                        <p className='detail'>{ungVien.mucTieuNgheNghiep || 'Đang cập nhật'}</p>
+                                        <p style={{ whiteSpace: "pre-line" }} className='detail'>{ungVien.mucTieuNgheNghiep || 'Đang cập nhật'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -203,20 +203,20 @@ const ThongTinChiTietUngVien = () => {
                                 <InfoItem icon={<FaMailBulk />} info={ungVien.email} />
                                 <InfoItem
                                     icon={<TeamOutlined />}
-                                    info={'Kinh nghiệm: ' + (ungVien.kinhNghiem || 'Chưa cập nhật')}
+                                    info={'Kinh nghiệm: ' + (ungVien.kinhNghiem || 'Đang cập nhật')}
                                 />
                                 <InfoItem
                                     icon={<CreditCardFilled />}
-                                    info={'Cấp bậc: ' + ungVien.capBac || 'Đang cập nhật'}
+                                    info={'Cấp bậc: ' + (ungVien.capBac || 'Đang cập nhật')}
                                 />
                                 <InfoItem
                                     icon={<SlidersFilled />}
-                                    info={'Học vấn: ' + (ungVien.hocVan || 'Chưa cập nhật')}
+                                    info={'Học vấn: ' + (ungVien.hocVan || 'Đang cập nhật')}
                                 />
                                 <InfoItem
                                     icon={<FaSearchLocation />}
                                     info={
-                                        'Địa điểm muốn làm việc: ' + (ungVien.diaDiemMongMuonLamViec || 'Chưa cập nhật')
+                                        'Địa điểm muốn làm việc: ' + (ungVien.diaDiemMongMuonLamViec.length == 0 ? 'Đang cập nhật' : ungVien.diaDiemMongMuonLamViec)
                                     }
                                 />
                             </div>

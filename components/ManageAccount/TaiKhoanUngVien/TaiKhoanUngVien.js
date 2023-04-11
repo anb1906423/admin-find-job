@@ -6,7 +6,8 @@ import { DeleteFilled } from '@ant-design/icons';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
-import { Switch } from 'antd';
+import { SearchOutlined, SettingOutlined  } from '@ant-design/icons';
+import { Switch, Input } from 'antd';
 
 import styles from './taikhoanungvien.module.scss';
 import Heading from '@/components/Heading';
@@ -22,9 +23,14 @@ import { swalert, swtoast } from '@/mixin/swal.mixin';
 const cx = classNames.bind(styles);
 const url = '/quan-ly-tai-khoan/ung-vien'
 
+const { Search } = Input;
+
 function TaiKhoanUngVien() {
     const router = useRouter()
+    const [email, setEmail] = useState('');
+    const [result, setResult] = useState([]);
     const [data, setData] = useState([]);
+
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
 
@@ -37,6 +43,7 @@ function TaiKhoanUngVien() {
 
                 if (Res && Res.data.length > 0) {
                     setData(Res.data);
+                    setResult(Res.data)
                 }
             } catch (error) {
                 console.log(error);
@@ -47,10 +54,32 @@ function TaiKhoanUngVien() {
 
         fetch();
     }, []);
+    
+    const handleSearch = async () => {
+        if (!email) {
+            setResult(data);
+        } else {
+            const res = await fetch(backendAPI + '/ung-vien/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            });
+            const data = await res.json();
+            setResult(data);
+        }
+    };
+
+    useEffect(() => {
+        handleSearch()
+    }, [email])
+
 
     const refreshData = async () => {
         const result = await axios.get(backendAPI + '/ung-vien');
         setData(result.data);
+        setResult(result.data)
     };
 
     const handleUpdateState = async (item, id) => {
@@ -84,6 +113,15 @@ function TaiKhoanUngVien() {
     return (
         <div className={cx('tai-khoan-ung-vien-wp')}>
             {isLoading && <Loading />}
+            <Input
+                type="text"
+                size="large"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email ứng viên"
+                style={{ width: 300 }}
+                addonAfter={<SearchOutlined />}
+            />
             <Heading title="Danh Sách Tài Khoản Ứng Viên" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
@@ -100,8 +138,8 @@ function TaiKhoanUngVien() {
                     </tr>
                 </thead>
                 <tbody>
-                    {!_.isEmpty(data) &&
-                        data.map((item, index) => {
+                    {result.length > 0 ? (
+                        result.map((item, index) => {
                             const id = uuidv4();
 
                             return (
@@ -134,7 +172,11 @@ function TaiKhoanUngVien() {
                                     </td>
                                 </tr>
                             );
-                        })}
+                        })) : (
+                            <tr>
+                                <td colSpan="7" className="text-center">Không có kết quả phù hợp</td>
+                            </tr>
+                        )}
                 </tbody>
             </table>
             <div className={cx('btn-next', 'd-flex', 'justify-content-center', 'py-4')}>

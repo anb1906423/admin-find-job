@@ -7,7 +7,7 @@ function index() {
     return (
         <>
             <Head>
-                <title>Danh Sách Tài Khoản Ứng Viên</title>
+                <title>Tài Khoản Ứng Viên</title>
             </Head>
             <TaiKhoanUngVien />
         </>
