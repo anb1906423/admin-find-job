@@ -14,7 +14,7 @@ import {
     SlidersFilled,
     ReconciliationFilled,
 } from '@ant-design/icons';
-import { FaLocationArrow } from 'react-icons/fa';
+import { FaLocationArrow, FaMapMarkedAlt } from 'react-icons/fa';
 import { Switch } from 'antd';
 import { swtoast } from '@/mixin/swal.mixin';
 import axios from 'axios';
@@ -102,14 +102,14 @@ const ThongTinChiTietNhaTuyenDung = () => {
                     <div className="banner-box position-relative">
                         <Image
                             width={'100%'}
-                            height={'440px'}
+                            height={'300px'}
                             style={{
                                 objectFit: 'cover',
                             }}
                             className="banner-cty"
                             src={
                                 nhaTuyenDung.banner ||
-                                'https://t4.ftcdn.net/jpg/04/95/28/65/240_F_495286577_rpsT2Shmr6g81hOhGXALhxWOfx1vOQBa.jpg'
+                                'https://img.freepik.com/free-photo/flat-lay-office-desk-assortment-with-copy-space_23-2148707962.jpg'
                             }
                         />
                         <div className="logo-box position-absolute">
@@ -119,29 +119,30 @@ const ThongTinChiTietNhaTuyenDung = () => {
                                 className="logo-cty"
                                 src={
                                     nhaTuyenDung.logoCty ||
-                                    'https://t4.ftcdn.net/jpg/04/95/28/65/240_F_495286577_rpsT2Shmr6g81hOhGXALhxWOfx1vOQBa.jpg'
+                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuavY2BXFQ8Ny8qRzPTfZi_qhIIrkoO31CPYoRTjr-YuR4ZDxPMJm2bfk8umv88yzj-TM&usqp=CAU'
                                 }
                             />
                         </div>
                     </div>
                     <h4 className="ten-cty text-center text-uppercase fs-5">{nhaTuyenDung.tenCty}</h4>
-                    <div className="gioi-thieu-box">{nhaTuyenDung.gioiThieu}</div>
+                    <div style={{ whiteSpace: "pre-line" }} className="gioi-thieu-box">{nhaTuyenDung.gioiThieu}</div>
                 </div>
                 <div className="col-3">
                     <div className="heading-in-profile text-uppercase fw-bold">Thông tin công ty</div>
                     <div className="info-box">
                         <InfoItem icon={<PhoneFilled />} info={nhaTuyenDung.soDienThoai} />
+                        <InfoItem icon={<FaMapMarkedAlt />} info={nhaTuyenDung.khuVuc || "Đang cập nhật" } />
                         <InfoItem icon={<FaLocationArrow />} info={nhaTuyenDung.diaChi} />
-                        <InfoItem icon={<ChromeFilled />} info={nhaTuyenDung.website || 'Chưa cập nhật'} />
-                        <InfoItem icon={<TeamOutlined />} info={'Quy mô: ' + (nhaTuyenDung.quiMo || 'Chưa cập nhật')} />
+                        <InfoItem icon={<ChromeFilled />} info={nhaTuyenDung.website || 'Đang cập nhật'} />
+                        <InfoItem icon={<TeamOutlined />} info={'Quy mô: ' + (nhaTuyenDung.quiMo || 'Đang cập nhật')} />
                         <InfoItem icon={<CreditCardFilled />} info={'MST: ' + nhaTuyenDung.maSoThue} />
                         <InfoItem
                             icon={<SlidersFilled />}
-                            info={'Loại hình: ' + (nhaTuyenDung.loaiHinhDoanhNghiep || 'Chưa cập nhật')}
+                            info={'Loại hình: ' + (nhaTuyenDung.loaiHinhDoanhNghiep || 'Đang cập nhật')}
                         />
                         <InfoItem
                             icon={<ReconciliationFilled />}
-                            info={'Lĩnh vực: ' + (nhaTuyenDung.linhVucNgheNghiep || 'Chưa cập nhật')}
+                            info={'Lĩnh vực: ' + (nhaTuyenDung.linhVucNgheNghiep || 'Đang cập nhật')}
                         />
                     </div>
                     <div

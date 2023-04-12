@@ -1,11 +1,12 @@
 import React, { Children, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { Switch } from 'antd';
 import { useState } from 'react';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
+import { SearchOutlined, SettingOutlined } from '@ant-design/icons';
+import { Switch, Input } from 'antd';
 
 import styles from './taikhoannhatuyendung.module.scss';
 import Heading from '@/components/Heading';
@@ -23,6 +24,8 @@ const url = '/quan-ly-tai-khoan/nha-tuyen-dung'
 
 function TaiKhoanNhaTuyenDung() {
     const router = useRouter()
+    const [email, setEmail] = useState('');
+    const [result, setResult] = useState([]);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
@@ -36,6 +39,7 @@ function TaiKhoanNhaTuyenDung() {
 
                 if (Res && Res.data.length > 0) {
                     setData(Res.data);
+                    setResult(Res.data)
                     console.log(data);
                 }
             } catch (error) {
@@ -47,6 +51,26 @@ function TaiKhoanNhaTuyenDung() {
 
         fetch();
     }, []);
+
+    const handleSearch = async () => {
+        if (!email) {
+            setResult(data);
+        } else {
+            const res = await fetch(backendAPI + '/nha-tuyen-dung/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            });
+            const data = await res.json();
+            setResult(data);
+        }
+    };
+
+    useEffect(() => {
+        handleSearch()
+    }, [email])
 
     const refreshData = async () => {
         const result = await axios.get(backendAPI + '/nha-tuyen-dung');
@@ -84,6 +108,15 @@ function TaiKhoanNhaTuyenDung() {
     return (
         <div className={cx('tai-khoan-ung-vien-wp')}>
             {isLoading && <Loading />}
+            <Input
+                type="text"
+                size="large"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email nhà tuyển dụng"
+                style={{ width: 300 }}
+                addonAfter={<SearchOutlined />}
+            />
             <Heading title="Danh Sách Tài Khoản Nhà Tuyển Dụng" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
@@ -100,8 +133,8 @@ function TaiKhoanNhaTuyenDung() {
                     </tr>
                 </thead>
                 <tbody>
-                    {!_.isEmpty(data) &&
-                        data.map((item, index) => {
+                    {result.length > 0 ? (
+                        result.map((item, index) => {
                             const id = uuidv4();
 
                             return (
@@ -130,7 +163,11 @@ function TaiKhoanNhaTuyenDung() {
                                     </td>
                                 </tr>
                             );
-                        })}
+                        })) : (
+                        <tr>
+                            <td colSpan="7" className="text-center">Không có kết quả phù hợp</td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
             <div className={cx('btn-next', 'd-flex', 'justify-content-center', 'py-4')}>

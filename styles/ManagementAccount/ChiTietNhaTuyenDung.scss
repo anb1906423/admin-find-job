@@ -13,14 +13,35 @@
                 transform    : translateX(-50%);
                 border-radius: 50%;
 
-                .logo-cty {
-                    border-radius: 50%;
-                }
+            }
+
+            .logo-cty {
+                border-radius: 50%;
             }
         }
 
         .ten-cty {
             margin-top: 80px;
+        }
+
+        .gioi-thieu-box {
+            margin-top: 24px;
+            padding-top: 12px;
+            .detail {
+                text-align: justify;
+            }
+            p {
+                margin-bottom: 4px;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 1px;
+                background-color: #ccc;
+                left: 0;
+                top: 0;
+            }
         }
     }
 
@@ -31,19 +52,36 @@
     // infoItem
     .info-item {
         padding: 12px 0;
+
         &::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 1px;
+            content         : "";
+            position        : absolute;
+            width           : 100%;
+            height          : 1px;
             background-color: #ccc;
-            bottom: 0;
-            left: 0;
+            bottom          : 0;
+            left            : 0;
         }
+
         svg {
-            min-width: 12.88px;
+            min-width : 12.88px;
             min-height: 12.88px;
-            max-width: 12.88px;
+            max-width : 12.88px;
         }
     }
+}
+
+// Chi tiết ứng viên
+.main-info {
+    margin: 8px 0 10px 164px;
+
+    .main-info-item {
+        margin: 4px 0;
+    }
+}
+
+.ten-uv {
+    right: -404px;
+    top  : 30%;
+    width: 400px;
 }

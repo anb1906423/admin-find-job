@@ -2,11 +2,11 @@ import React, { Children, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { DeleteFilled } from '@ant-design/icons';
+import { DeleteFilled, SearchOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
-import { Switch } from 'antd';
+import { Switch, Input } from 'antd';
 
 import styles from './taikhoanungvien.module.scss';
 import Heading from '@/components/Heading';
@@ -21,12 +21,16 @@ import { swalert, swtoast } from '@/mixin/swal.mixin';
 import buildAgainData from '@/app/@func/buildAgainData/buildAgainData';
 
 const cx = classNames.bind(styles);
-const url = '/quan-ly-tai-khoan/ung-vien';
 
 const limit = 2;
+const url = '/quan-ly-tai-khoan/ung-vien';
+const { Search } = Input;
+
 function TaiKhoanUngVien() {
     const router = useRouter();
     const [data, setData] = useState([]);
+    const [email, setEmail] = useState('');
+    const [result, setResult] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
 
@@ -43,6 +47,7 @@ function TaiKhoanUngVien() {
                 if (Res && Res.data.data.length > 0) {
                     setData((prev) => [...prev, ...Res.data.data]);
                     setMetaData(Res.data.meta);
+                    setResult((prev) => [...prev, ...Res.data.data]);
                 }
             } catch (error) {
                 console.log(error);
@@ -53,6 +58,28 @@ function TaiKhoanUngVien() {
 
         fetch();
     }, [currentPage]);
+
+    const handleSearch = async () => {
+        if (!email) {
+            setResult(data);
+        } else {
+            const res = await fetch(backendAPI + '/ung-vien/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }),
+            });
+            const data = await res.json();
+
+            console.log(data);
+            setResult(data);
+        }
+    };
+
+    useEffect(() => {
+        handleSearch();
+    }, [email]);
 
     const handleLoadMoreUngVien = () => {
         if (!_.isEmpty(metaData)) {
@@ -79,10 +106,10 @@ function TaiKhoanUngVien() {
             // Update the item state with the new value returned from the API
             // console.log('Check updatedItem :', updatedItem.data);
 
-            const dataBuild = buildAgainData(data, updatedItem?.data ? updatedItem?.data : {});
+            const dataBuild = buildAgainData(result, updatedItem?.data ? updatedItem?.data : {});
 
             setData(dataBuild);
-
+            setResult(dataBuild);
             // refreshData();
         } catch (error) {
             console.error(error);
@@ -92,17 +119,18 @@ function TaiKhoanUngVien() {
         }
     };
 
-    const PreviewAccount = (item) => {
-        return (
-            <Wrapper>
-                <PreViewAccount data={item} />
-            </Wrapper>
-        );
-    };
-
     return (
         <div className={cx('tai-khoan-ung-vien-wp')}>
             {isLoading && <Loading />}
+            <Input
+                type="text"
+                size="large"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email ứng viên"
+                style={{ width: 300 }}
+                addonAfter={<SearchOutlined />}
+            />
             <Heading title="Danh Sách Tài Khoản Ứng Viên" />
             <table className="table table-hover align-middle table-primary">
                 <thead className="table-dark">
@@ -119,7 +147,7 @@ function TaiKhoanUngVien() {
                     </tr>
                 </thead>
                 <tbody>
-                    {!_.isEmpty(data) &&
+                    {/* {!_.isEmpty(data) &&
                         data.map((item, index) => {
                             const id = uuidv4();
 
@@ -157,7 +185,53 @@ function TaiKhoanUngVien() {
                                     </td>
                                 </tr>
                             );
-                        })}
+                        })} */}
+                    {result.length > 0 ? (
+                        result.map((item, index) => {
+                            const id = uuidv4();
+
+                            return (
+                                // <Tippy
+                                //     key={id}
+                                //     delay={[50, 100]}
+                                //     placement="bottom-start"
+                                //     render={() => PreviewAccount(item)}
+                                // >
+                                // </Tippy>
+                                <tr key={id} className={cx('item-account')}>
+                                    <td className="position-relative">{index + 1}</td>
+                                    <td>{item.hoVaTen ? item.hoVaTen : 'None'}</td>
+                                    <td>{item.email ? item.email : 'None'}</td>
+                                    <td>{item.soDienThoai ? item.soDienThoai : 'None'}</td>
+                                    <td>{item.diaChi ? item.diaChi : 'None'}</td>
+                                    <td>{item.viTriMongMuon ? item.viTriMongMuon : 'None'}</td>
+                                    <td className="text-center">
+                                        <Switch
+                                            size="small"
+                                            defaultChecked={item.state}
+                                            onChange={() => {
+                                                handleUpdateState(item, item.id);
+                                            }}
+                                            disabled={disabledInputState}
+                                        />
+                                        <span
+                                            onClick={() => router.push(url + `/${item.id}`)}
+                                            style={{ cursor: 'pointer', marginTop: '4px' }}
+                                            className="d-block text-primary"
+                                        >
+                                            Chi tiết
+                                        </span>
+                                    </td>
+                                </tr>
+                            );
+                        })
+                    ) : (
+                        <tr>
+                            <td colSpan="7" className="text-center">
+                                Không có kết quả phù hợp
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
             {!_.isEmpty(metaData) && metaData.totalPages !== currentPage && (
