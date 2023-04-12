@@ -18,25 +18,31 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { backendAPI } from '../../../config';
 import { swalert, swtoast } from '@/mixin/swal.mixin';
+import buildAgainData from '@/app/@func/buildAgainData/buildAgainData';
 
 const cx = classNames.bind(styles);
-const url = '/quan-ly-tai-khoan/ung-vien'
+const url = '/quan-ly-tai-khoan/ung-vien';
 
+const limit = 2;
 function TaiKhoanUngVien() {
-    const router = useRouter()
+    const router = useRouter();
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [metaData, setMetaData] = useState({});
 
     useEffect(() => {
         const fetch = async () => {
             try {
                 setIsLoading(true);
 
-                const Res = await getAllAccountUngVien();
+                const Res = await getAllAccountUngVien(currentPage, limit);
 
-                if (Res && Res.data.length > 0) {
-                    setData(Res.data);
+                if (Res && Res.data.data.length > 0) {
+                    setData((prev) => [...prev, ...Res.data.data]);
+                    setMetaData(Res.data.meta);
                 }
             } catch (error) {
                 console.log(error);
@@ -46,11 +52,19 @@ function TaiKhoanUngVien() {
         };
 
         fetch();
-    }, []);
+    }, [currentPage]);
+
+    const handleLoadMoreUngVien = () => {
+        if (!_.isEmpty(metaData)) {
+            if (metaData.nextPage) {
+                setCurrentPage(metaData.nextPage);
+            }
+        }
+    };
 
     const refreshData = async () => {
-        const result = await axios.get(backendAPI + '/ung-vien');
-        setData(result.data);
+        const result = await axios.get(backendAPI + `/ung-vien?${currentPage}&limit=${limit}`);
+        setData(result.data.data);
     };
 
     const handleUpdateState = async (item, id) => {
@@ -63,8 +77,13 @@ function TaiKhoanUngVien() {
                 : await axios.put(backendAPI + '/ung-vien/on', { ung_vien_id: id });
 
             // Update the item state with the new value returned from the API
-            console.log(updatedItem);
-            refreshData();
+            // console.log('Check updatedItem :', updatedItem.data);
+
+            const dataBuild = buildAgainData(data, updatedItem?.data ? updatedItem?.data : {});
+
+            setData(dataBuild);
+
+            // refreshData();
         } catch (error) {
             console.error(error);
             swtoast.error({ text: 'Xảy ra lỗi khi thay đổi trạng thái ứng viên!' });
@@ -113,9 +132,7 @@ function TaiKhoanUngVien() {
                                 // >
                                 // </Tippy>
                                 <tr key={id} className={cx('item-account')}>
-                                    <td className='position-relative'>
-                                        {index + 1}
-                                    </td>
+                                    <td className="position-relative">{index + 1}</td>
                                     <td>{item.hoVaTen ? item.hoVaTen : 'None'}</td>
                                     <td>{item.email ? item.email : 'None'}</td>
                                     <td>{item.soDienThoai ? item.soDienThoai : 'None'}</td>
@@ -126,20 +143,30 @@ function TaiKhoanUngVien() {
                                             size="small"
                                             defaultChecked={item.state}
                                             onChange={() => {
-                                                handleUpdateState(item, item.id)
+                                                handleUpdateState(item, item.id);
                                             }}
                                             disabled={disabledInputState}
                                         />
-                                        <span onClick={() => router.push(url + `/${item.id}`)} style={{ cursor: 'pointer', marginTop: "4px" }} className="d-block text-primary">Chi tiết</span>
+                                        <span
+                                            onClick={() => router.push(url + `/${item.id}`)}
+                                            style={{ cursor: 'pointer', marginTop: '4px' }}
+                                            className="d-block text-primary"
+                                        >
+                                            Chi tiết
+                                        </span>
                                     </td>
                                 </tr>
                             );
                         })}
                 </tbody>
             </table>
-            <div className={cx('btn-next', 'd-flex', 'justify-content-center', 'py-4')}>
-                <button className="btn btn-primary">Xem Thêm Tài Khoản</button>
-            </div>
+            {!_.isEmpty(metaData) && metaData.totalPages !== currentPage && (
+                <div className={cx('btn-next', 'd-flex', 'justify-content-center', 'py-4')}>
+                    <button onClick={handleLoadMoreUngVien} className="btn btn-primary">
+                        Xem Thêm Tài Khoản
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

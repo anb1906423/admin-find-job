@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import Loading from '@/app/@func/Loading/Loading';
 import InfoItem from '@/components/InfoItem';
 import {
-    ChromeFilled,
     CreditCardFilled,
     HeartOutlined,
     PhoneFilled,
@@ -17,10 +16,11 @@ import {
 } from '@ant-design/icons';
 import { FaLocationArrow } from 'react-icons/fa';
 import { Image, Switch } from 'antd';
-import RenderArray from '@/app/@func/RenderArray/RenderArray';
 import { swtoast } from '@/mixin/swal.mixin';
 import { backendAPI } from '@/config';
 import axios from 'axios';
+
+const limit = 100;
 
 const ThongTinChiTietUngVien = () => {
     const router = useRouter();
@@ -32,17 +32,22 @@ const ThongTinChiTietUngVien = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [metaData, setMetaData] = useState({});
+
     useEffect(() => {
         const fetch = async () => {
             try {
                 setIsLoading(true);
 
-                const Res = await getAllAccountUngVien();
+                const Res = await getAllAccountUngVien(currentPage, limit);
 
-                if (Res && Res.data.length > 0) {
-                    setDanhSachUngVien(Res.data);
+                console.log(Res);
 
-                    const foundUngVien = Res.data.find((item) => item.id === idUngVien);
+                if (Res && Res.data.data.length > 0) {
+                    setDanhSachUngVien(Res.data.data);
+
+                    const foundUngVien = Res.data.data.find((item) => item.id === idUngVien);
                     if (foundUngVien) {
                         setUngVien(foundUngVien);
                     }
@@ -55,15 +60,15 @@ const ThongTinChiTietUngVien = () => {
         };
 
         fetch();
-    }, [idUngVien]);
+    }, [idUngVien, currentPage]);
 
     const refreshData = async () => {
-        const Res = await getAllAccountUngVien();
+        const Res = await getAllAccountUngVien(currentPage, limit);
 
         if (Res && Res.data.length > 0) {
-            setUngVien(Res.data);
+            setUngVien(Res.data.data);
 
-            const foundNhaTuyenDung = Res.data.find((item) => item.id === idUngVien);
+            const foundNhaTuyenDung = Res.data.data.find((item) => item.id === idUngVien);
             if (foundNhaTuyenDung) {
                 setUngVien(foundNhaTuyenDung);
             }
@@ -87,7 +92,8 @@ const ThongTinChiTietUngVien = () => {
 
             // Update the item state with the new value returned from the API
             console.log(updatedItem);
-            refreshData();
+            // refreshData();
+            setUngVien(updatedItem?.data);
         } catch (error) {
             console.error(error);
             swtoast.error({ text: 'Xảy ra lỗi khi thay đổi trạng thái ứng viên!' });

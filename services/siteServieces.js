@@ -7,8 +7,8 @@ const config = {
     },
 };
 
-export const getAllAccountUngVien = () => {
-    return axios.get('/ung-vien');
+export const getAllAccountUngVien = (page = 1, limit = 10) => {
+    return axios.get(`/ung-vien?page=${page}&limit=${limit}`);
 };
 
 export const getAllAccountNhaTuyenDung = () => {
@@ -136,8 +136,8 @@ export const getAllMucLuong = () => {
 };
 
 export const createNewMucLuong = (data) => {
-    return axios.post(`/muc-luong`, data)
-}
+    return axios.post(`/muc-luong`, data);
+};
 
 export const updateMucLuong = (id, data) => {
     return axios.put(`/muc-luong/${id}`, data);
