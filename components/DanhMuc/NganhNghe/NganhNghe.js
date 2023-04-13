@@ -14,8 +14,8 @@ import SupperRenderNode from '@/app/components/SupperRenderNode/SupperRenderNode
 
 const cx = classNames.bind(styles);
 
-const buttonArray = ['Tất cả nghành nghề', 'Tạo mới nghành nghề'];
-function NghanhNgheComponent(props) {
+const buttonArray = ['Tất cả ngành nghề', 'Tạo mới ngành nghề'];
+function NganhNgheComponent(props) {
     const [indexClick, setIndexClick] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -167,8 +167,8 @@ function NghanhNgheComponent(props) {
             {isLoading && <Loading />}
             <SupperSwitchButton onButtonClick={handleButtonClick} buttonArray={buttonArray} />
             <SupperComponents
-                titleAll="Tất cả nghành nghề"
-                titleAdd="Thêm mới nghành nghề"
+                titleAll="Tất cả ngành nghề"
+                titleAdd="Thêm mới ngành nghề"
                 data={data}
                 isAdd={indexClick === 1 ? false : true}
                 cx={cx}
@@ -196,7 +196,7 @@ function NghanhNgheComponent(props) {
                 )}
             >
                 <div className={cx('item')}>
-                    <label htmlFor="hoten">Tên nghành nghề</label>
+                    <label htmlFor="hoten">Tên ngành nghề</label>
                     <input
                         onChange={(e) => setTen(e.target.value)}
                         value={ten}
@@ -219,6 +219,6 @@ function NghanhNgheComponent(props) {
     );
 }
 
-NghanhNgheComponent.propTypes = {};
+NganhNgheComponent.propTypes = {};
 
-export default NghanhNgheComponent;
+export default NganhNgheComponent;

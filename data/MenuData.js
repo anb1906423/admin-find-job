@@ -19,7 +19,7 @@ export const urlchildrenList = [
         
     ],
     [
-       
+       '/quan-ly-cong-viec'
     ],
     [
         '/quan-ly-tai-khoan/nha-tuyen-dung', '/quan-ly-tai-khoan/ung-vien'
