@@ -3,7 +3,7 @@ export const childrenList = [
         
     ],
     [
-       "Tất cả công việc" 
+       "Tất cả bài đăng" 
     ],
     [
         'Nhà tuyển dụng', 'Ứng viên'
@@ -19,7 +19,7 @@ export const urlchildrenList = [
         
     ],
     [
-       '/quan-ly-cong-viec'
+       '/quan-ly-bai-dang'
     ],
     [
         '/quan-ly-tai-khoan/nha-tuyen-dung', '/quan-ly-tai-khoan/ung-vien'
@@ -31,4 +31,4 @@ export const urlchildrenList = [
     ],
 ]
 
-export const sideBarList = ['Dashboard', 'QL Công việc', 'QL Tài khoản', 'QL Danh mục']
+export const sideBarList = ['Dashboard', 'QL Bài đăng', 'QL Tài khoản', 'QL Danh mục']
