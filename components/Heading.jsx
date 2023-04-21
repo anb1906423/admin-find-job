@@ -6,7 +6,7 @@ const Heading = (props) => {
             <h6
                 className="text-uppercase fw-bolder"
                 style={{
-                    padding: '10px',
+                    padding: '20px 10px 10px',
                 }}
             >
                 {props.title}
