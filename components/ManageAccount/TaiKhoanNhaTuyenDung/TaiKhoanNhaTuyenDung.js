@@ -5,7 +5,7 @@ import { useState } from 'react';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
-import { SearchOutlined, SettingOutlined } from '@ant-design/icons';
+import { SearchOutlined, SettingOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Switch, Input } from 'antd';
 
 import styles from './taikhoannhatuyendung.module.scss';
@@ -21,7 +21,6 @@ import { swalert, swtoast } from '@/mixin/swal.mixin';
 
 const cx = classNames.bind(styles);
 const url = '/quan-ly-tai-khoan/nha-tuyen-dung'
-
 function TaiKhoanNhaTuyenDung() {
     const router = useRouter()
     const [email, setEmail] = useState('');
@@ -29,6 +28,9 @@ function TaiKhoanNhaTuyenDung() {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [metaData, setMetaData] = useState({});
 
     useEffect(() => {
         const fetch = async () => {
@@ -40,7 +42,8 @@ function TaiKhoanNhaTuyenDung() {
                 if (Res && Res.data.length > 0) {
                     setData(Res.data);
                     setResult(Res.data)
-                    console.log(data);
+                    setMetaData(Res.data.meta);
+
                 }
             } catch (error) {
                 console.log(error);
@@ -50,7 +53,7 @@ function TaiKhoanNhaTuyenDung() {
         };
 
         fetch();
-    }, []);
+    }, [currentPage]);
 
     const handleSearch = async () => {
         if (!email) {
@@ -71,6 +74,14 @@ function TaiKhoanNhaTuyenDung() {
     useEffect(() => {
         handleSearch()
     }, [email])
+
+    const handleLoadMoreCompany = () => {
+        if (!_.isEmpty(metaData)) {
+            if (metaData.nextPage) {
+                setCurrentPage(metaData.nextPage);
+            }
+        }
+    };
 
     const refreshData = async () => {
         const result = await axios.get(backendAPI + '/nha-tuyen-dung');
@@ -170,9 +181,13 @@ function TaiKhoanNhaTuyenDung() {
                     )}
                 </tbody>
             </table>
-            <div className={cx('btn-next', 'd-flex', 'justify-content-center', 'py-4')}>
-                <button className="btn btn-primary">Xem Thêm Tài Khoản</button>
-            </div>
+            {!_.isEmpty(metaData) && metaData.totalPages !== currentPage && (
+                <div className={cx('py-4', 'xem-them')}>
+                    <button onClick={handleLoadMoreCompany} className="d-flex justify-content-between align-items-center">
+                        <DoubleRightOutlined />
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

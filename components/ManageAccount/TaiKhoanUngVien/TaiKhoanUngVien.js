@@ -2,7 +2,7 @@ import React, { Children, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { DeleteFilled, SearchOutlined } from '@ant-design/icons';
+import { DeleteFilled, SearchOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import Tippy from '@tippyjs/react/headless';
@@ -235,9 +235,9 @@ function TaiKhoanUngVien() {
                 </tbody>
             </table>
             {!_.isEmpty(metaData) && metaData.totalPages !== currentPage && (
-                <div className={cx('btn-next', 'd-flex', 'justify-content-center', 'py-4')}>
-                    <button onClick={handleLoadMoreUngVien} className="btn btn-primary">
-                        Xem Thêm Tài Khoản
+                <div className={cx('py-4', 'xem-them')}>
+                    <button onClick={handleLoadMoreUngVien} className="d-flex justify-content-between align-items-center">
+                        <DoubleRightOutlined />
                     </button>
                 </div>
             )}

@@ -181,6 +181,7 @@ const JobManage = () => {
           addonAfter={<SearchOutlined />}
         />
         <Select
+          showSearch
           defaultValue="Địa điểm làm việc"
           size="large"
           style={{
@@ -193,6 +194,7 @@ const JobManage = () => {
           }))}
         />
         <Select
+          showSearch
           defaultValue="Mức lương"
           size="large"
           style={{
@@ -214,6 +216,7 @@ const JobManage = () => {
           addonAfter={<SearchOutlined />}
         />
         <Select
+          showSearch
           defaultValue="Cấp bậc"
           size="large"
           style={{
@@ -226,6 +229,7 @@ const JobManage = () => {
           }))}
         />
         <Select
+          showSearch
           defaultValue="Bằng cấp"
           size="large"
           style={{
@@ -238,6 +242,7 @@ const JobManage = () => {
           }))}
         />
         <Select
+          showSearch
           defaultValue="Kinh nghiệm làm việc"
           size="large"
           style={{
@@ -250,6 +255,7 @@ const JobManage = () => {
           }))}
         />
         <Select
+          showSearch
           defaultValue="Loại hợp đồng"
           size="large"
           style={{
@@ -262,6 +268,7 @@ const JobManage = () => {
           }))}
         />
         <Select
+          showSearch
           defaultValue="Trạng thái"
           size="large"
           style={{
