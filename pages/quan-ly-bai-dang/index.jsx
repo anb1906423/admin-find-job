@@ -282,11 +282,11 @@ const JobManage = () => {
             },
             {
               value: true,
-              label: 'true',
+              label: 'On',
             },
             {
               value: false,
-              label: 'false',
+              label: 'Off',
             },
           ]}
         />

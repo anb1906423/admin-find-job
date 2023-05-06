@@ -86,6 +86,7 @@ function TaiKhoanNhaTuyenDung() {
     const refreshData = async () => {
         const result = await axios.get(backendAPI + '/nha-tuyen-dung');
         setData(result.data);
+        setResult(result.data)
     };
 
     const handleUpdateState = async (item, id) => {

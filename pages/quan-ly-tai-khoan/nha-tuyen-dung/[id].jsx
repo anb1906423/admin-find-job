@@ -7,18 +7,26 @@ import InfoItem from '@/components/InfoItem';
 import {
     PhoneFilled,
     ChromeFilled,
-    CheckOutlined,
-    CloseOutlined,
+    DollarCircleOutlined,
+    ClockCircleOutlined,
     TeamOutlined,
     CreditCardFilled,
     SlidersFilled,
     ReconciliationFilled,
 } from '@ant-design/icons';
-import { FaLocationArrow, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaLocationArrow, FaMapMarkedAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { Switch } from 'antd';
 import { swtoast } from '@/mixin/swal.mixin';
 import axios from 'axios';
 import { backendAPI } from '@/config';
+
+function convertTime(timeString) {
+    const date = new Date(timeString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+    return `${day}-${month}-${year}`;
+}
 
 const ThongTinChiTietNhaTuyenDung = () => {
     const router = useRouter();
@@ -29,6 +37,8 @@ const ThongTinChiTietNhaTuyenDung = () => {
     const [nhaTuyenDung, setNhaTuyenDung] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [disabledInputState, setDisabledInputState] = useState(false);
+
+    const [otherJobList, setOtherJobList] = useState([])
 
     useEffect(() => {
         const fetch = async () => {
@@ -54,6 +64,23 @@ const ThongTinChiTietNhaTuyenDung = () => {
 
         fetch();
     }, [idNhaTuyenDung]);
+
+    useEffect(() => {
+        const getOtherJobList = async () => {
+            try {
+                const response = await axios.get(backendAPI +
+                    `/cong-viec/bai-dang-cong-ty?emailcty=${nhaTuyenDung.email}`
+                );
+                setOtherJobList(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        if (nhaTuyenDung.email) {
+            getOtherJobList();
+        }
+    }, [nhaTuyenDung.email]);
 
     const refreshData = async () => {
         const Res = await getAllAccountNhaTuyenDung();
@@ -125,13 +152,52 @@ const ThongTinChiTietNhaTuyenDung = () => {
                         </div>
                     </div>
                     <h4 className="ten-cty text-center text-uppercase fs-5">{nhaTuyenDung.tenCty}</h4>
-                    <div style={{ whiteSpace: "pre-line" }} className="gioi-thieu-box">{nhaTuyenDung.gioiThieu}</div>
+                    <div>
+                        <h6>Việc làm đang tuyển dụng</h6>
+                        <div>
+                            {
+                                otherJobList && otherJobList.map((item, index) => {
+                                    return (
+                                        <div className='hiring-jobs' key={index}>
+                                            <div className="row">
+                                                <div className="col-12 info-box">
+                                                    <div>
+                                                        <div className="">
+                                                            <h6 className="text-uppercase chuc-danh">{item.chucDanh}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div className="d-flex row">
+                                                        <p className="d-flex align-items-center col-4 mb-0">
+                                                            <DollarCircleOutlined />
+                                                            <span>{item.mucLuong}</span>
+                                                        </p>
+                                                        <p className="d-flex align-items-center col-4 mb-0">
+                                                            <FaMapMarkerAlt />
+                                                            <span>{item.diaDiemLamViec}</span>
+                                                        </p>
+                                                        <p className="d-flex align-items-center col-4 mb-0">
+                                                            <ClockCircleOutlined />
+                                                            <span>{convertTime(item.created_at)}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    <div style={{ whiteSpace: "pre-line" }} className="gioi-thieu-box">
+                        <h6>Giới thiệu công ty</h6>
+                        {nhaTuyenDung.gioiThieu}
+                    </div>
                 </div>
                 <div className="col-3">
                     <div className="heading-in-profile text-uppercase fw-bold">Thông tin công ty</div>
                     <div className="info-box">
                         <InfoItem icon={<PhoneFilled />} info={nhaTuyenDung.soDienThoai} />
-                        <InfoItem icon={<FaMapMarkedAlt />} info={nhaTuyenDung.khuVuc || "Đang cập nhật" } />
+                        <InfoItem icon={<FaMapMarkedAlt />} info={nhaTuyenDung.khuVuc || "Đang cập nhật"} />
                         <InfoItem icon={<FaLocationArrow />} info={nhaTuyenDung.diaChi} />
                         <InfoItem icon={<ChromeFilled />} info={nhaTuyenDung.website || 'Đang cập nhật'} />
                         <InfoItem icon={<TeamOutlined />} info={'Quy mô: ' + (nhaTuyenDung.quiMo || 'Đang cập nhật')} />
