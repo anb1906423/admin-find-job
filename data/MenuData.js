@@ -1,6 +1,6 @@
 export const childrenList = [
     [
-        
+        "Thông tin"
     ],
     [
        "Tất cả bài đăng" 
@@ -16,7 +16,7 @@ export const childrenList = [
 
 export const urlchildrenList = [
     [
-        
+        "/thong-tin"
     ],
     [
        '/quan-ly-bai-dang'
