@@ -16,7 +16,7 @@ export const childrenList = [
 
 export const urlchildrenList = [
     [
-        "/thong-tin"
+        "/"
     ],
     [
        '/quan-ly-bai-dang'
